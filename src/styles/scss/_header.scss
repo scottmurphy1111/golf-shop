@@ -1,0 +1,102 @@
+.header-container {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 132px;
+  background: #fff;
+  position: relative;
+  padding: 2.4rem;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  header {
+    width: 100%;
+    display: flex;
+    color: #141414;
+    align-items: center;
+  }
+
+  .logo {
+    width: 99px;
+    height: 99px;
+    flex: 1 1 99px;
+    display: inline-block;
+    background: url(../../assets/white-bg-mc-logo.jpeg) no-repeat;
+    background-size: contain;
+    cursor: pointer;
+
+    a {
+      display: block;
+      height: 100%;
+    }
+  }
+
+  .cart-container {
+    display: flex;
+    flex: 1 1 calc(100% - 99px);
+    justify-content: flex-end;
+    align-items: center;
+
+    form {
+      margin-right: 16px;
+    }
+
+    .cart-item {
+      width: 44px;
+      height: 40px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+
+      &.has-items {
+        background: rgb(0, 158, 108);
+        border-radius: 2px;
+        padding: 4px;
+        box-sizing: border-box;
+        width: 100px;
+        height: 40px;
+
+        .cart-icon {
+          background: url(../../assets/cart-white.svg) no-repeat;
+          width: 36px;
+          height: 32px;
+        }
+
+        .cart-count {
+          font-size: 20px;
+          color: #fff;
+        }
+      }
+
+      .cart-icon {
+        background: url(../../assets/cart-black.svg) no-repeat;
+        width: 44px;
+        height: 40px;
+      }
+    }
+  }
+
+  nav {
+    flex: 1 1 1000px;
+  }
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    justify-content: space-between;
+    align-items: center;
+
+    li {
+      cursor: pointer;
+      font-size: 2rem;
+
+      &:hover {
+        //todo fix margin, not on last li
+        border-bottom: 4px solid $mc_gold;
+      }
+
+      .cart-li {
+      }
+    }
+  }
+}

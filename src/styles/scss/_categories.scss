@@ -1,0 +1,17 @@
+.categories-container {
+  margin-bottom: 1.6rem;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    list-style: none;
+
+    li {
+      flex: 0 1 auto;
+      font-size: 1.6rem;
+      margin: 0 1.6rem 0.8rem 0;
+      cursor: pointer;
+    }
+  }
+}
