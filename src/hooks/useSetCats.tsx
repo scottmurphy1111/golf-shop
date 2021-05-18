@@ -7,6 +7,7 @@ const useSetCats = (allCats: Category[], catNames: string[]): Category[] => {
   useEffect(() => {
     const getCats = allCats.reduce((acc: Category[], category: Category) => {
       catNames.forEach((cat: string, i: number) => {
+        // console.log('cat', cat, category);
         return category.slug === cat ? (acc[i] = category) : null;
       });
 

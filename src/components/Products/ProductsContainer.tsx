@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { commerce } from '../../lib/commerce';
+import { PageParams } from '../../models/PageParams';
+import { Product } from '../../models/Product';
 import { extractParams } from '../../utils/extractParams';
 import CategoriesSection from '../Shared/CategoriesSection';
 import FilterContainer from './FilterContainer';
@@ -7,13 +10,13 @@ import ProductsHero from './ProductsHero';
 import ProductsList from './ProductsList';
 
 const ProductsContainer = (props: RouteComponentProps) => {
-  const [params, setParams] = useState({});
-  const [isEquipment, setIsEquipment] = useState(false);
+  const [params, setParams] = useState<PageParams>({});
+  const [isClubs, setIsClubs] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const extractedParams = useMemo(() => extractParams(props), [props]);
 
   useEffect(() => {
-    console.log('running');
     setParams(extractedParams);
 
     return () => {
@@ -22,26 +25,49 @@ const ProductsContainer = (props: RouteComponentProps) => {
   }, [props, extractedParams]);
 
   useEffect(() => {
-    console.log('running2');
-    setIsEquipment(props.location.search.includes('equipment'));
+    setIsClubs(props.location.search.includes('clubs'));
 
     return () => {
-      setIsEquipment(false);
+      setIsClubs(false);
     };
   }, [props.location.search]);
+
+  useEffect(() => {
+    const fetchProductsByCategory = async () => {
+      if (params.category) {
+        try {
+          const { data } = await commerce.products.list({
+            category_slug: [params.category],
+          });
+          if (data) {
+            setProducts(data);
+          }
+        } catch (error) {
+          console.log('There was an error fetch products by categories', error);
+        }
+      }
+    };
+    fetchProductsByCategory();
+
+    return () => {
+      setProducts([]);
+    };
+  }, [params]);
   return (
     <>
-      {isEquipment ? (
-        <p>Call Golf Shop for Club Fittings and Equipment Availability</p>
+      {isClubs ? (
+        <p>
+          Call the Golf Shop at 888-555-1122 for Club Fittings and Availability
+        </p>
       ) : (
         <>
           <ProductsHero />
           <section>
             <>
               <CategoriesSection />
-              <FilterContainer />
+              <FilterContainer category={params.category} />
             </>
-            <ProductsList />
+            <ProductsList products={products} />
           </section>
           {JSON.stringify(params)}
         </>

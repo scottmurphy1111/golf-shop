@@ -1,7 +1,18 @@
 import React from 'react';
+import { Product } from '../../models/Product';
 
-const ProductsList = () => {
-  return <div>P list</div>;
+type Props = {
+  products: Product[];
+};
+
+const ProductsList = ({ products }: Props) => {
+  return (
+    <div>
+      {products.map((product) => (
+        <p key={product.id}>{product.name}</p>
+      ))}
+    </div>
+  );
 };
 
 export default ProductsList;
