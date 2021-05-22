@@ -13,30 +13,162 @@ export const filterCats: Filter[] = [
   {
     category: 'apparel',
     filters: [
-      'tops',
-      'bottoms',
-      'outerwear',
-      'headwear',
-      'mens',
-      'womens',
-      'juniors',
+      {
+        name: 'tops',
+        checked: false,
+      },
+      {
+        name: 'bottoms',
+        checked: false,
+      },
+      {
+        name: 'outerwear',
+        checked: false,
+      },
+      {
+        name: 'headwear',
+        checked: false,
+      },
+      {
+        name: 'mens',
+        checked: false,
+      },
+      {
+        name: 'womens',
+        checked: false,
+      },
+      {
+        name: 'juniors',
+        checked: false,
+      },
     ],
-    status: ['new', 'bestseller', 'online-exclusive', 'sale'],
+    status: [
+      {
+        name: 'new',
+        checked: false,
+      },
+      {
+        name: 'bestseller',
+        checked: false,
+      },
+      {
+        name: 'online-exclusive',
+        checked: false,
+      },
+      {
+        name: 'sale',
+        checked: false,
+      },
+    ],
   },
   {
     category: 'shoes',
-    filters: ['mens', 'womens', 'juniors'],
-    status: ['new', 'bestseller', 'online-exclusive', 'sale'],
+    filters: [
+      {
+        name: 'mens',
+        checked: false,
+      },
+      {
+        name: 'womens',
+        checked: false,
+      },
+      {
+        name: 'juniors',
+        checked: false,
+      },
+    ],
+    status: [
+      {
+        name: 'new',
+        checked: false,
+      },
+      {
+        name: 'bestseller',
+        checked: false,
+      },
+      {
+        name: 'online-exclusive',
+        checked: false,
+      },
+      {
+        name: 'sale',
+        checked: false,
+      },
+    ],
   },
   {
     category: 'accessories',
-    filters: ['headcovers', 'towels', 'headwear', 'misc'],
-    status: ['new', 'bestseller', 'online-exclusive', 'sale'],
+    filters: [
+      {
+        name: 'headcovers',
+        checked: false,
+      },
+      {
+        name: 'towels',
+        checked: false,
+      },
+      {
+        name: 'headwear',
+        checked: false,
+      },
+      {
+        name: 'misc',
+        checked: false,
+      },
+    ],
+    status: [
+      {
+        name: 'new',
+        checked: false,
+      },
+      {
+        name: 'bestseller',
+        checked: false,
+      },
+      {
+        name: 'online-exclusive',
+        checked: false,
+      },
+      {
+        name: 'sale',
+        checked: false,
+      },
+    ],
   },
   {
     category: 'equipment',
-    filters: ['balls', 'gloves', 'misc'],
-    status: ['new', 'bestseller', 'online-exclusive', 'sale'],
+    filters: [
+      {
+        name: 'balls',
+        checked: false,
+      },
+      {
+        name: 'gloves',
+        checked: false,
+      },
+      {
+        name: 'misc',
+        checked: false,
+      },
+    ],
+    status: [
+      {
+        name: 'new',
+        checked: false,
+      },
+      {
+        name: 'bestseller',
+        checked: false,
+      },
+      {
+        name: 'online-exclusive',
+        checked: false,
+      },
+      {
+        name: 'sale',
+        checked: false,
+      },
+    ],
   },
   {
     category: 'clubs',
@@ -45,47 +177,33 @@ export const filterCats: Filter[] = [
   },
   {
     category: 'misc',
-    filters: ['memerobilia', 'umbrellas'],
-    status: ['new', 'bestseller', 'online-exclusive', 'sale'],
+    filters: [
+      {
+        name: 'memerobilia',
+        checked: false,
+      },
+      {
+        name: 'umbrellas',
+        checked: false,
+      },
+    ],
+    status: [
+      {
+        name: 'new',
+        checked: false,
+      },
+      {
+        name: 'bestseller',
+        checked: false,
+      },
+      {
+        name: 'online-exclusive',
+        checked: false,
+      },
+      {
+        name: 'sale',
+        checked: false,
+      },
+    ],
   },
 ];
-
-//   filters: [
-//     'tops',
-//     'bottoms',
-//     'outerwear',
-//     'shoes',
-//     'sale',
-//     'accessories',
-//     'clubs',
-//     'balls',
-//     'misc',
-//   ],
-//   apparel: ['tops', 'bottoms', 'outerwear', 'shoes', 'sale', 'accessories'],
-//   equipment: ['clubs', 'balls', 'misc', 'sale'],
-//   all: [
-//     'shop-all',
-//     'mens-clothing',
-//     'womens-clothing',
-//     'juniors-clothing',
-//     'equipment',
-//     'sale',
-//     'tops',
-//     'bottoms',
-//     'outerwear',
-//     'shoes',
-//     'accessories',
-//     'clubs',
-//     'balls',
-//     'misc',
-//   ],
-// };
-
-// export const catTypes = {
-//   'shop-all': 'all',
-//   'mens-clothing': 'apparel',
-//   'womens-clothing': 'apparel',
-//   'juniors-clothing': 'apparel',
-//   equipment: 'equipment',
-//   sale: 'all',
-// };

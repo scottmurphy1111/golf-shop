@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import useSetCats from '../../hooks/useSetCats';
 import { Category } from '../../models/Category';
 import { storeFrontCats } from '../../utils/cats';
 import { useStore } from '../../store/store';
+import CategoryItem from './CategoryItem';
 
 type Props = {
   headline?: string;
@@ -11,11 +11,8 @@ type Props = {
 
 const CategoriesSection = ({ headline }: Props) => {
   const [localCats, setLocalCats] = useState<Category[]>([]);
-
   const fetchCats = useStore((state) => state.setAllCats);
-
   const categories = useStore((state) => state.allCats);
-
   const cats = useSetCats(categories, storeFrontCats);
 
   useEffect(() => {
@@ -30,11 +27,7 @@ const CategoriesSection = ({ headline }: Props) => {
       {headline && <h2>{headline}</h2>}
       <ul>
         {localCats.map((category: Category) => (
-          <li key={category.id}>
-            <Link to={`/products?category=${category.slug}`}>
-              {category.name}
-            </Link>
-          </li>
+          <CategoryItem key={category.id} category={category} />
         ))}
       </ul>
     </section>

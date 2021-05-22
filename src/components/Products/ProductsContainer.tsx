@@ -3,9 +3,10 @@ import { RouteComponentProps } from 'react-router';
 import { commerce } from '../../lib/commerce';
 import { PageParams } from '../../models/PageParams';
 import { Product } from '../../models/Product';
+import { useStore } from '../../store/store';
 import { extractParams } from '../../utils/extractParams';
 import CategoriesSection from '../Shared/CategoriesSection';
-import FilterContainer from './FilterContainer';
+import ProductsFiltersContainer from './ProductsFiltersContainer';
 import ProductsHero from './ProductsHero';
 import ProductsList from './ProductsList';
 
@@ -13,6 +14,8 @@ const ProductsContainer = (props: RouteComponentProps) => {
   const [params, setParams] = useState<PageParams>({});
   const [isClubs, setIsClubs] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const currentCat = useStore((state) => state.currentCat);
+  const setCurrentCat = useStore((state) => state.setCurrentCat);
 
   const extractedParams = useMemo(() => extractParams(props), [props]);
 
@@ -22,7 +25,13 @@ const ProductsContainer = (props: RouteComponentProps) => {
     return () => {
       setParams({});
     };
-  }, [props, extractedParams]);
+  }, [extractedParams]);
+
+  useEffect(() => {
+    if (params.category) {
+      setCurrentCat(params.category);
+    }
+  }, [params, setCurrentCat]);
 
   useEffect(() => {
     setIsClubs(props.location.search.includes('clubs'));
@@ -65,7 +74,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
           <section>
             <>
               <CategoriesSection />
-              <FilterContainer category={params.category} />
+              <ProductsFiltersContainer category={currentCat} />
             </>
             <ProductsList products={products} />
           </section>
