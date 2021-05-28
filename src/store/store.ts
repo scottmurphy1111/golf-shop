@@ -1,7 +1,6 @@
 import create from 'zustand';
 import { Category } from '../models/Category';
 import { Filter } from '../models/Filter';
-import { Product } from '../models/Product';
 import { getPaginatedCats } from '../utils/getPaginatedCats';
 
 type StoreState = {

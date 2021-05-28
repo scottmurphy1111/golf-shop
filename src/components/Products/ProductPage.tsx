@@ -13,17 +13,16 @@ const ProductPage = (props: RouteComponentProps) => {
   const [product, setProduct] = useState<Product>();
   const singleProductId = useStore((state) => state.singleProductId);
   const [fetchError, setFetchError] = useState(false);
-  const [description, setDescription] = useState('');
   const [colorVars, setColorVars] = useState<any>([]);
   const [selectedColor, setSelectedColor] = useState<any>({});
   const [sizeVars, setSizeVars] = useState<any>([]);
   const [selectedSize, setSelectedSize] = useState<any>('');
   const [quantity, setQuantity] = useState(1);
-  const [imageVars, setImageVars] = useState([
+  const imageVars = [
     { source: 'mc-image.jpg', id: '111' },
     { source: 'mc-image2.jpg', id: '112' },
     { source: 'mc-image3.jpg', id: '113' },
-  ]);
+  ];
   const [selectedImage, setSelectedImage] = useState<any>(imageVars[0]);
 
   const imageThumbRef = useRef(null);
