@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 const EmailCapture = () => {
   const [formData, setFormData] = useState({});
@@ -13,7 +13,7 @@ const EmailCapture = () => {
       };
     });
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log('formData', formData);
@@ -22,7 +22,7 @@ const EmailCapture = () => {
   return (
     <section>
       <h2>Stay in Touch</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="first"

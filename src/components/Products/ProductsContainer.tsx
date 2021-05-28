@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { commerce } from '../../lib/commerce';
-import { CommerceResponse } from '../../models/CommerceResponse';
 import { PageParams } from '../../models/PageParams';
 import { Product } from '../../models/Product';
 import { useStore } from '../../store/store';
@@ -17,7 +15,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
   const [params, setParams] = useState<PageParams>({});
   const [isClubs, setIsClubs] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [slugs, setSlugs] = useState<string[]>([]);
+  const [slugs, setSlugs] = useState<(string | null)[]>([]);
   const currentCat = useStore((state) => state.currentCat);
   const setCurrentCat = useStore((state) => state.setCurrentCat);
   const checkedFilterVals = useStore((state) => state.checkedFilterVals);
@@ -36,7 +34,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
     if (params.category) {
       setCurrentCat(params.category);
     }
-  }, [params, setCurrentCat]);
+  }, [params.category, setCurrentCat]);
 
   useEffect(() => {
     setIsClubs(props.location.search.includes('clubs'));
@@ -59,26 +57,22 @@ const ProductsContainer = (props: RouteComponentProps) => {
   }, [params.category, checkedFilterVals]);
 
   useEffect(() => {
-    console.log('slugs', slugs);
     let didCancel = false;
     setLoadingState(true);
-
     const fetchProductsByCategory = async () => {
       if (params.category) {
         try {
           await getProducts({
             category_slug: slugs,
           })
-            .then((response: any) => {
-              console.log('response', response);
-              if (response.data) {
-                return response.data;
+            .then((data: Product[]) => {
+              if (data) {
+                return data;
               }
               return Promise.reject();
             })
             .then((data: Product[]) => {
               if (!didCancel) {
-                console.log('data', data);
                 setProducts(data);
               }
             })
@@ -96,7 +90,15 @@ const ProductsContainer = (props: RouteComponentProps) => {
       setProducts([]);
       didCancel = true;
     };
-  }, [params, slugs]);
+  }, [params.category, slugs]);
+
+  const renderProductsList = () => {
+    return loadingState ? (
+      <span>...loading</span>
+    ) : (
+      <ProductsList products={products} />
+    );
+  };
 
   return (
     <>
@@ -112,11 +114,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
               <CategoriesSection />
               <ProductsFiltersContainer category={currentCat} />
             </>
-            {loadingState ? (
-              <span>...loading</span>
-            ) : (
-              <ProductsList products={products} />
-            )}
+            {renderProductsList()}
           </section>
           {JSON.stringify(params)}
         </>

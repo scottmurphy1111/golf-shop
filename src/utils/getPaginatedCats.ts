@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Category } from '../models/Category';
+import { CHEC_BASE_URL } from './constants';
 
 type reqHeaders = {
   'X-Authorization': string | undefined;
@@ -7,7 +8,7 @@ type reqHeaders = {
   'Content-Type': string;
 };
 
-const catsUrl: string = 'https://api.chec.io/v1/categories';
+const catsUrl: string = `${CHEC_BASE_URL}/categories`;
 const headers: reqHeaders = {
   'X-Authorization': process.env.REACT_APP_CHEC_SANDBOX_KEY,
   Accept: 'application/json',

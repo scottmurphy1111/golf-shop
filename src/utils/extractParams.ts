@@ -7,8 +7,8 @@ export const extractParams = (props: RouteComponentProps) => {
 
   search.replace(
     new RegExp('([^?=&]+)(=([^&]*))?', 'g'),
-    function ($0: string, $1: string, $2: string, $3: string): any {
-      paramsObj[$1] = $3;
+    function ($0: string, $1: string, $2: string, $3: string): string {
+      return (paramsObj[$1] = $3);
     }
   );
 

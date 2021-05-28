@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { FilterItem } from '../../models/Filter';
 import { useStore } from '../../store/store';
 
@@ -11,8 +11,8 @@ const ProductsFilterItem = React.memo(({ filter, updateFilters }: Props) => {
   const resetFilterCats = useStore((state) => state.resetFilterCats);
   const checkboxRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: any) => {
-    const val = e.target.value;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = (e.target as HTMLInputElement).value;
     updateFilters(val);
     filter.checked = !filter.checked;
   };
@@ -32,7 +32,7 @@ const ProductsFilterItem = React.memo(({ filter, updateFilters }: Props) => {
           type="checkbox"
           value={filter.name}
           checked={filter.checked}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
         {filter.name}
       </label>

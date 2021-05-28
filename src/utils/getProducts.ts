@@ -1,25 +1,33 @@
 import axios from 'axios';
 import { Product } from '../models/Product';
+import { CHEC_BASE_URL, HEADERS } from './constants';
 
-type reqHeaders = {
-  'X-Authorization': string | undefined;
-  Accept: string;
-  'Content-Type': string;
+type Options = {
+  [key: string]: string[];
 };
 
-const productsUrl: string = 'https://api.chec.io/v1/products';
-const headers: reqHeaders = {
-  'X-Authorization': process.env.REACT_APP_CHEC_SANDBOX_KEY,
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
+const buildUrlParams = (options: Options) => {
+  let paramsString = '';
+  Object.entries(options).forEach(([key, value]: [string, string[]]) => {
+    if (key === 'category_slug') {
+      value.forEach((item: string) => {
+        paramsString += `${key}[]=${item}&`;
+      });
+    }
+  });
+
+  return paramsString;
 };
+
+const productsUrl: string = `${CHEC_BASE_URL}/products`;
 
 export const getProducts = async (
   options = {},
   page = 1
 ): Promise<Product[]> => {
-  const query = `${productsUrl}?page=${page}&${options}`;
-  const response = await axios.get(query, { headers });
+  const params = buildUrlParams(options);
+  const query = `${productsUrl}?page=${page}&${params}`;
+  const response = await axios.get(query, { headers: HEADERS });
   const data = response.data;
   const meta = data.meta;
 

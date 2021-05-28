@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { Category } from '../models/Category';
 import { Filter } from '../models/Filter';
+import { Product } from '../models/Product';
 import { getPaginatedCats } from '../utils/getPaginatedCats';
 
 type StoreState = {
@@ -11,14 +12,16 @@ type StoreState = {
   filterCats: Filter[];
   resetFilterCats: boolean;
   setResetFilterCats: (reset: boolean) => void;
-  checkedFilterVals: any;
-  setCheckedFilterVals: (val: any) => void;
+  checkedFilterVals: string[];
+  setCheckedFilterVals: (val: string) => void;
   clearCheckedFilterVals: () => void;
+  singleProductId: string;
+  setSingleProductId: (id: string) => void;
 };
 
-const removeFilter = (currentVals: any, val: any) => {
+const removeFilter = (currentVals: string[], val: string) => {
   console.log('remove filter checkedVals', currentVals);
-  return currentVals.filter((item: any) => (item !== val ? item : null));
+  return currentVals.filter((item: string) => (item !== val ? item : null));
 };
 
 export const useStore = create<StoreState>((set) => ({
@@ -241,7 +244,7 @@ export const useStore = create<StoreState>((set) => ({
   checkedFilterVals: [],
   setCheckedFilterVals: (val) => {
     set((state) => {
-      return !state.checkedFilterVals.some((item: any) => {
+      return !state.checkedFilterVals.some((item: string) => {
         return item === val;
       })
         ? { checkedFilterVals: [...state.checkedFilterVals, val] }
@@ -250,5 +253,11 @@ export const useStore = create<StoreState>((set) => ({
   },
   clearCheckedFilterVals: () => {
     set(() => ({ checkedFilterVals: [] }));
+  },
+  singleProductId: '',
+  setSingleProductId: (id) => {
+    set(() => ({
+      singleProductId: id,
+    }));
   },
 }));

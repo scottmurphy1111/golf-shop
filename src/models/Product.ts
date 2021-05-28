@@ -33,7 +33,7 @@ export type Product = {
   };
   created: number;
   description: string;
-  extra_fields: [];
+  extra_fields: ExtraFields[] | null;
   has: {
     digital_delivery: boolean;
     physical_delivery: boolean;
@@ -68,4 +68,15 @@ export type Product = {
   thank_you_url?: string;
   updated: number;
   variant_groups: [];
+};
+
+type ExtraFields = {
+  id: string;
+  name: string;
+  type: string;
+  required: boolean;
+  options: any;
+  meta: any;
+  created: number;
+  updated: number;
 };

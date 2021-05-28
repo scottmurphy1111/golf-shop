@@ -410,6 +410,8 @@ template {
       .product-page__wrapper .product-page__details .colors .product-page__selection,
       .product-page__wrapper .product-page__details .sizes .product-page__selection {
         margin-left: 1.6rem; }
+    .product-page__wrapper .product-page__details .colors span {
+      border: 1px solid #ccc; }
     .product-page__wrapper .product-page__details .sizes span {
       display: flex;
       justify-content: center;
