@@ -8,6 +8,8 @@ import { Product } from '../../models/Product';
 import { useStore } from '../../store/store';
 import { CHEC_BASE_URL, HEADERS } from '../../utils/constants';
 import { stripHtml } from 'string-strip-html';
+import { useCartStore } from '../../store/cartStore';
+import { getSingleProductId } from '../../utils/getSingleProductId';
 
 const ProductPage = (props: RouteComponentProps) => {
   const [product, setProduct] = useState<Product>();
@@ -16,8 +18,14 @@ const ProductPage = (props: RouteComponentProps) => {
   const [colorVars, setColorVars] = useState<any>([]);
   const [selectedColor, setSelectedColor] = useState<any>({});
   const [sizeVars, setSizeVars] = useState<any>([]);
-  const [selectedSize, setSelectedSize] = useState<any>('');
+  const [selectedSize, setSelectedSize] = useState<any>({});
   const [quantity, setQuantity] = useState(1);
+  const [selectedVariants, setSelectedVariants] = useState<any>(null);
+
+  console.log('props', props);
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
   const imageVars = [
     { source: 'mc-image.jpg', id: '111' },
     { source: 'mc-image2.jpg', id: '112' },
@@ -29,22 +37,16 @@ const ProductPage = (props: RouteComponentProps) => {
 
   //fetch single product
   useEffect(() => {
-    let productId;
-    const pId = localStorage.getItem('product-id');
-    if (pId) {
-      productId = pId;
-    } else {
-      productId = singleProductId;
-    }
+    const productId = getSingleProductId(singleProductId, props);
     if (productId) {
       commerce.products
-        .retrieve(pId)
+        .retrieve(productId)
         .then((res: Product) => {
           setProduct(res);
         })
 
         .catch((error: any) => {
-          console.error(`Cannot get product ${pId}`, error);
+          console.error(`Cannot get product ${productId}`, error);
         });
 
       return () => {
@@ -61,13 +63,8 @@ const ProductPage = (props: RouteComponentProps) => {
 
   //fetch colors and sizes
   useEffect(() => {
-    let productId;
-    const pId = localStorage.getItem('product-id');
-    if (pId) {
-      productId = pId;
-    } else {
-      productId = singleProductId;
-    }
+    const productId = getSingleProductId(singleProductId, props);
+
     const url: string = `${CHEC_BASE_URL}/products/${productId}/variant_groups`;
     axios
       .get(url, {
@@ -102,9 +99,8 @@ const ProductPage = (props: RouteComponentProps) => {
       });
   }, [singleProductId]);
 
-  const onAddToCart = (id: any, quantity: any) => {
-    //TODO need to move this to store
-    console.log('id quantity  ', id, quantity);
+  const handleAddToCart = (id: any, quantity: any, variantData: any = {}) => {
+    addToCart(id, quantity, variantData);
   };
 
   const handleQuantityClick = (quantity: any, type: any) => {
@@ -116,12 +112,12 @@ const ProductPage = (props: RouteComponentProps) => {
     }
   };
 
-  const handleColorClick = (color: any) => {
-    setSelectedColor(color);
+  const handleColorClick = (groupId: any, color: any) => {
+    setSelectedColor({ groupId, color });
   };
 
-  const handleSizeClick = (size: any) => {
-    setSelectedSize(size);
+  const handleSizeClick = (groupId: any, size: any) => {
+    setSelectedSize({ groupId, size });
   };
 
   const handleImageSelect = (key: any) => {
@@ -193,12 +189,14 @@ const ProductPage = (props: RouteComponentProps) => {
                               .toLowerCase()
                               .replace(' ', ''),
                           }}
-                          onClick={() => handleColorClick(color)}
+                          onClick={() => handleColorClick(colorVars.id, color)}
                         ></span>
                       ))}
-                      <div className="product-page__selection">
-                        {selectedColor.name}
-                      </div>
+                      {selectedColor.color && (
+                        <div className="product-page__selection">
+                          {selectedColor.color.name}
+                        </div>
+                      )}
                     </div>
                   )}
                 {sizeVars && sizeVars.options && sizeVars.options.length > 0 && (
@@ -208,14 +206,16 @@ const ProductPage = (props: RouteComponentProps) => {
                         data-active={`${selectedSize === size ? true : false}`}
                         key={size.id}
                         data-value={size.name}
-                        onClick={() => handleSizeClick(size)}
+                        onClick={() => handleSizeClick(sizeVars.id, size)}
                       >
                         {size.name}
                       </span>
                     ))}
-                    <div className="product-page__selection">
-                      {selectedSize.name}
-                    </div>
+                    {selectedSize.size && (
+                      <div className="product-page__selection">
+                        {selectedSize.size.name}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -241,7 +241,12 @@ const ProductPage = (props: RouteComponentProps) => {
                   fluid
                   primary
                   size="massive"
-                  onClick={() => onAddToCart(singleProductId, quantity)}
+                  onClick={() =>
+                    handleAddToCart(singleProductId, quantity, {
+                      selectedColor,
+                      selectedSize,
+                    })
+                  }
                 >
                   <Icon name="lock" />
                   Add to Cart

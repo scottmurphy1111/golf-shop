@@ -20,7 +20,10 @@ const ShowcaseSection = ({ headline, slug }: ShowcaseProps) => {
           setProducts(data);
         }
       } catch (error) {
-        console.log('There was an error fetch products by categories', error);
+        console.log(
+          'There was an error fetching products by categories',
+          error
+        );
       }
     };
     fetchProductsByCategory();

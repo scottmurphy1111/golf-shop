@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import Header from './components/Header/Header';
 import ProductPage from './components/Products/ProductPage';
 import ProductsContainer from './components/Products/ProductsContainer';
 import StoreFrontContainer from './components/StoreFront/StoreFrontContainer';
@@ -7,6 +8,7 @@ import StoreFrontContainer from './components/StoreFront/StoreFrontContainer';
 const App = () => {
   return (
     <>
+      <Header />
       <Switch>
         <Route
           exact

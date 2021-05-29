@@ -80,7 +80,10 @@ const ProductsContainer = (props: RouteComponentProps) => {
               setLoadingState(false);
             });
         } catch (error) {
-          console.log('There was an error fetch products by categories', error);
+          console.log(
+            'There was an error fetching products by categories',
+            error
+          );
         }
       }
     };
