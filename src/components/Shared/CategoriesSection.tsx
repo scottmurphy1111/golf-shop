@@ -7,9 +7,10 @@ import CategoryItem from './CategoryItem';
 
 type Props = {
   headline?: string;
+  type: string;
 };
 
-const CategoriesSection = ({ headline }: Props) => {
+const CategoriesSection = ({ headline, type }: Props) => {
   const [localCats, setLocalCats] = useState<Category[]>([]);
   const fetchCats = useStore((state) => state.setAllCats);
   const categories = useStore((state) => state.allCats);
@@ -23,7 +24,7 @@ const CategoriesSection = ({ headline }: Props) => {
     setLocalCats(cats);
   }, [cats]);
   return (
-    <section>
+    <section className={`categories-container ${type}`}>
       {headline && <h2>{headline}</h2>}
       <ul>
         {localCats.map((category: Category) => (

@@ -1,4 +1,9 @@
-export const getSingleProductId = (singleProductId, props) => {
+import { RouteComponentProps } from 'react-router';
+
+export const getSingleProductId = (
+  singleProductId: string,
+  props: RouteComponentProps
+): string => {
   let productId;
   const pId = localStorage.getItem('product-id');
   console.log('pid', pId);

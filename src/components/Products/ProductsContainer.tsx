@@ -112,11 +112,11 @@ const ProductsContainer = (props: RouteComponentProps) => {
       ) : (
         <>
           <ProductsHero />
-          <section>
-            <>
-              <CategoriesSection />
+          <section className="products-container">
+            <div className="products-filters-container">
+              <CategoriesSection type="cat-page" />
               <ProductsFiltersContainer category={currentCat} />
-            </>
+            </div>
             {renderProductsList()}
           </section>
           {JSON.stringify(params)}

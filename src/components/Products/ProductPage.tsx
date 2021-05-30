@@ -22,8 +22,6 @@ const ProductPage = (props: RouteComponentProps) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariants, setSelectedVariants] = useState<any>(null);
 
-  console.log('props', props);
-
   const addToCart = useCartStore((state) => state.addToCart);
 
   const imageVars = [
@@ -59,7 +57,20 @@ const ProductPage = (props: RouteComponentProps) => {
     return () => {
       setFetchError(false);
     };
-  }, [singleProductId]);
+  }, [props, singleProductId]);
+
+  //fetch all variants for product
+  useEffect(() => {
+    const productId = getSingleProductId(singleProductId, props);
+
+    const url: string = `${CHEC_BASE_URL}/products/${productId}/variants`;
+    axios
+      .get(url, {
+        headers: HEADERS,
+      })
+      .then((res) => res.data)
+      .then((json) => console.log(json));
+  }, [props, singleProductId]);
 
   //fetch colors and sizes
   useEffect(() => {
@@ -97,10 +108,40 @@ const ProductPage = (props: RouteComponentProps) => {
       .then(() => {
         // setLoading(false);
       });
-  }, [singleProductId]);
+  }, [props, singleProductId]);
 
-  const handleAddToCart = (id: any, quantity: any, variantData: any = {}) => {
-    addToCart(id, quantity, variantData);
+  const handleAddToCart = (
+    id: any,
+    quantity: number,
+    variantData: any = {}
+  ) => {
+    let data = {};
+    const colorData = variantData.selectedColor;
+    const sizeData = variantData.selectedSize;
+
+    console.log('c data', colorData);
+    console.log('s data', sizeData);
+
+    if (Object.keys(colorData).length) {
+      const colorGroup = colorData.groupId;
+      const colorOption = colorData.color.id;
+      data = {
+        ...data,
+        [colorGroup]: colorOption,
+      };
+    }
+
+    if (Object.keys(sizeData).length) {
+      const sizeGroup = sizeData.groupId;
+      const sizeOption = sizeData.size.id;
+      data = {
+        ...data,
+        [sizeGroup]: sizeOption,
+      };
+    }
+    // finalData = { [colorGroup]: colorOption, [sizeGroup]: sizeOption };
+    console.log('data', data);
+    addToCart(id, quantity, data);
   };
 
   const handleQuantityClick = (quantity: any, type: any) => {
@@ -242,7 +283,7 @@ const ProductPage = (props: RouteComponentProps) => {
                   primary
                   size="massive"
                   onClick={() =>
-                    handleAddToCart(singleProductId, quantity, {
+                    handleAddToCart(product.id, quantity, {
                       selectedColor,
                       selectedSize,
                     })

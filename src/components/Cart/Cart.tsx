@@ -15,15 +15,12 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
   let history = useHistory();
 
   const handleClickCart = (e: any) => {
-    // e.stopPropagation();
     const target = e.target;
 
-    if (target) {
-      // if (!target.classList.contains('cart')) {
-      //   setIsOpen(false);
-      // } else {
-      //   setIsOpen(true);
-      // }
+    if (document.querySelector('.cart')!.contains(target)) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
     }
   };
 

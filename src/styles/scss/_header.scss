@@ -16,11 +16,11 @@
   }
 
   .logo {
-    width: 99px;
-    height: 99px;
-    flex: 1 1 99px;
+    width: 112px;
+    height: 83px;
+    flex: 1 1 125px;
     display: inline-block;
-    background: url(../../assets/white-bg-mc-logo.jpeg) no-repeat;
+    background: url(../../assets/golf-shop-logo.svg) no-repeat;
     background-size: contain;
     cursor: pointer;
 
@@ -48,7 +48,7 @@
       align-items: center;
 
       &.has-items {
-        background: rgb(0, 158, 108);
+        background: #2185d0;
         border-radius: 2px;
         padding: 4px;
         box-sizing: border-box;

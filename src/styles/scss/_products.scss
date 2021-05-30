@@ -1,3 +1,7 @@
+.products-container {
+  display: flex;
+}
+
 .products-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(599px, 1fr));

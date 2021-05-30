@@ -72,7 +72,7 @@ const ProductsFiltersContainer = ({ category }: Props) => {
   }, [checkedFilterVals, history, location.search]);
 
   return (
-    <div>
+    <div className="">
       <h2>Filter By:</h2>
       {localFilters &&
         localFilters.filters.map((filter) => (

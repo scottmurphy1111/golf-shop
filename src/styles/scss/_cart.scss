@@ -5,6 +5,7 @@
   top: 0;
   right: 0;
   width: 50%;
+  min-width: 350px;
   height: 100vh;
   padding: 1.6rem;
   background: #f4f4f4;
@@ -20,8 +21,14 @@
 }
 
 .cart-item {
+  display: flex;
+
   img {
-    width: 100px;
-    height: 100px;
+    // width: 100%;
+    flex: 1 1 20%;
   }
+}
+
+.cart-item__details-qty {
+  display: flex;
 }

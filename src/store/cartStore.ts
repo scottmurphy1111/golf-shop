@@ -16,10 +16,13 @@ export const useCartStore = create<CartStoreState>((set) => ({
     set(() => ({ cart: cart }));
   },
   addToCart: async (productId: any, quantity: any, variantData: any) => {
+    console.log('productId', productId);
     try {
-      const { cart } = await commerce.cart.add(productId, quantity, {
-        options: variantData,
-      });
+      const { cart } = await commerce.cart.add(
+        productId,
+        quantity,
+        variantData
+      );
       set(() => ({ cart: cart }));
     } catch (error) {
       console.error('There was an error adding the item to the cart', error);

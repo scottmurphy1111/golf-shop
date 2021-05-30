@@ -149,8 +149,8 @@ template {
 .container {
   display: block;
   width: 100%;
-  margin: 0 auto;
-  padding: 0 2.4rem 4.8rem; }
+  max-width: 1200px;
+  margin: 0 auto; }
 
 .breadcrumbs-container {
   padding: 1.6rem 2.4rem; }
@@ -179,11 +179,11 @@ template {
     color: #141414;
     align-items: center; }
   .header-container .logo {
-    width: 99px;
-    height: 99px;
-    flex: 1 1 99px;
+    width: 112px;
+    height: 83px;
+    flex: 1 1 125px;
     display: inline-block;
-    background: url(../../assets/white-bg-mc-logo.jpeg) no-repeat;
+    background: url(../../assets/golf-shop-logo.svg) no-repeat;
     background-size: contain;
     cursor: pointer; }
     .header-container .logo a {
@@ -203,7 +203,7 @@ template {
       justify-content: space-evenly;
       align-items: center; }
       .header-container .cart-container .cart-item.has-items {
-        background: #009e6c;
+        background: #2185d0;
         border-radius: 2px;
         padding: 4px;
         box-sizing: border-box;
@@ -289,6 +289,9 @@ template {
       align-items: center;
       cursor: pointer;
       font-size: 2rem; }
+
+.products-container {
+  display: flex; }
 
 .products-list {
   display: grid;
@@ -442,6 +445,7 @@ template {
   top: 0;
   right: 0;
   width: 50%;
+  min-width: 350px;
   height: 100vh;
   padding: 1.6rem;
   background: #f4f4f4;
@@ -453,9 +457,13 @@ template {
   .cart[data-active='false'] {
     transform: translateX(100%); }
 
-.cart-item img {
-  width: 100px;
-  height: 100px; }
+.cart-item {
+  display: flex; }
+  .cart-item img {
+    flex: 1 1 20%; }
+
+.cart-item__details-qty {
+  display: flex; }
 
 .categories-container {
   margin-bottom: 1.6rem; }
@@ -469,6 +477,13 @@ template {
       font-size: 1.6rem;
       margin: 0 1.6rem 0.8rem 0;
       cursor: pointer; }
+
+.cat-page ul {
+  flex-direction: column;
+  align-items: flex-start; }
+
+.products-filters-container {
+  flex: 1 1 30%; }
 
 .checkout-form-wrapper {
   background: rgba(255, 255, 255, 0.8);

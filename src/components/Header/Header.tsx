@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <div className="header-container">
-      <header>
+      <header className="container">
         <div
           className="logo"
           onClick={() => (window.location.href = '/')}

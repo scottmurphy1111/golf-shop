@@ -13,7 +13,7 @@ const CartItem = ({ item }: Props) => {
     <div className="cart-item">
       <img
         className="cart-item__image"
-        src={`${process.env.PUBLIC_URL}/blueprint-irons.png`}
+        src={`${process.env.PUBLIC_URL}/placeholder.png`}
         alt={item.name}
       />
       <div className="cart-item__details">
@@ -35,6 +35,12 @@ const CartItem = ({ item }: Props) => {
             +
           </button>
         </div>
+        {item.selected_options.map((option: any, i: number) => (
+          <span key={option.option_id}>
+            {option.option_name}
+            {item.selected_options.length > i + 1 && <span>,</span>}
+          </span>
+        ))}
         <div className="cart-item__details-price">
           {item.line_total.formatted_with_symbol}
         </div>

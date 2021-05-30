@@ -4,4 +4,5 @@ export const HEADERS = {
   'X-Authorization': process.env.REACT_APP_CHEC_SANDBOX_KEY,
   Accept: 'application/json',
   'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
 };
