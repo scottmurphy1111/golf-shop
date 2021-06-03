@@ -4,8 +4,6 @@ const EmailCapture = () => {
   const [formData, setFormData] = useState({});
 
   const handleChange = (key: string, e: string) => {
-    console.log('e', e);
-
     setFormData((data) => {
       return {
         ...data,

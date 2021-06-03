@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { commerce } from '../../lib/commerce';
 import { Product } from '../../models/Product';
+import { useStore } from '../../store/store';
 
 type ShowcaseProps = {
   headline: string;
@@ -9,6 +11,9 @@ type ShowcaseProps = {
 
 const ShowcaseSection = ({ headline, slug }: ShowcaseProps) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const setSingleProductId = useStore((state) => state.setSingleProductId);
+
+  let history = useHistory();
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
@@ -33,18 +38,34 @@ const ShowcaseSection = ({ headline, slug }: ShowcaseProps) => {
     };
   }, [slug]);
 
+  const handleClick = (product: Product) => {
+    window.scrollTo(0, 0);
+    setSingleProductId(product.id);
+    // setProductName(product.name);
+    localStorage.setItem('product-id', product.id);
+    history.push(`/product/${product.id}`);
+  };
+
   return (
-    <div>
+    <section className="showcase-section component-section">
       <h2>{headline}</h2>
       <ul>
         {products.map((product: Product) => (
           <li key={product.id}>
+            <img src={`${process.env.PUBLIC_URL}/placeholder.png`} alt="" />
             <p>{product.name}</p>
             <p>{product.price.formatted_with_symbol}</p>
+            <button
+              name="product details"
+              className="product__btn primary"
+              onClick={() => handleClick(product)}
+            >
+              Product Details
+            </button>
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

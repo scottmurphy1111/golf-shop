@@ -24,7 +24,7 @@ const CategoriesSection = ({ headline, type }: Props) => {
     setLocalCats(cats);
   }, [cats]);
   return (
-    <section className={`categories-container ${type}`}>
+    <section className={`categories-container component-section ${type}`}>
       {headline && <h2>{headline}</h2>}
       <ul>
         {localCats.map((category: Category) => (

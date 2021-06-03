@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { PageParams } from '../../models/PageParams';
 import { Product } from '../../models/Product';
 import { useStore } from '../../store/store';
 import { extractParams } from '../../utils/extractParams';
 import { getProducts } from '../../utils/getProducts';
 import CategoriesSection from '../Shared/CategoriesSection';
+import FeaturedBanner from '../StoreFront/FeaturedBanner';
 import ProductsFiltersContainer from './ProductsFiltersContainer';
 import ProductsHero from './ProductsHero';
 import ProductsList from './ProductsList';
 
 const ProductsContainer = (props: RouteComponentProps) => {
   const [loadingState, setLoadingState] = useState<boolean>(false);
+  const [productsExist, setProductsExist] = useState<boolean>(false);
   const [params, setParams] = useState<PageParams>({});
   const [isClubs, setIsClubs] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -59,6 +62,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
   useEffect(() => {
     let didCancel = false;
     setLoadingState(true);
+    setProductsExist(false);
     const fetchProductsByCategory = async () => {
       if (params.category) {
         try {
@@ -75,6 +79,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
               if (!didCancel) {
                 setProducts(data);
               }
+              setProductsExist(true);
             })
             .finally(() => {
               setLoadingState(false);
@@ -96,22 +101,38 @@ const ProductsContainer = (props: RouteComponentProps) => {
   }, [params.category, slugs]);
 
   const renderProductsList = () => {
-    return loadingState ? (
-      <span>...loading</span>
-    ) : (
-      <ProductsList products={products} />
+    return (
+      <>
+        <Dimmer.Dimmable as={Segment} dimmed={loadingState}>
+          <Dimmer active={loadingState} inverted>
+            <Loader size="huge">Loading...</Loader>
+          </Dimmer>
+          <div className="products-list-wrapper">
+            {isClubs ? (
+              <p>
+                Call the Golf Shop at 888-555-1122 for Club Fittings and
+                Availability
+              </p>
+            ) : (
+              <ProductsList
+                products={products}
+                loadingState={loadingState}
+                productsExist={productsExist}
+              />
+            )}
+          </div>
+          {/* <Loader size="huge" inverted inline /> */}
+        </Dimmer.Dimmable>
+      </>
     );
   };
 
   return (
     <>
-      {isClubs ? (
-        <p>
-          Call the Golf Shop at 888-555-1122 for Club Fittings and Availability
-        </p>
-      ) : (
-        <>
-          <ProductsHero />
+      <ProductsHero />
+
+      <>
+        <div className="main-container container">
           <section className="products-container">
             <div className="products-filters-container">
               <CategoriesSection type="cat-page" />
@@ -119,9 +140,8 @@ const ProductsContainer = (props: RouteComponentProps) => {
             </div>
             {renderProductsList()}
           </section>
-          {JSON.stringify(params)}
-        </>
-      )}
+        </div>
+      </>
     </>
   );
 };

@@ -45,7 +45,11 @@ const CartItem = ({ item }: Props) => {
           {item.line_total.formatted_with_symbol}
         </div>
       </div>
-      <button type="button" onClick={() => removeFromCart(item.id)}>
+      <button
+        className="cart-item__remove-button"
+        type="button"
+        onClick={() => removeFromCart(item.id)}
+      >
         Remove
       </button>
     </div>

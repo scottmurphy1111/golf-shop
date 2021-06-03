@@ -4,14 +4,21 @@ import ProductItem from './ProductItem';
 
 type Props = {
   products: Product[];
+  loadingState: boolean;
+  productsExist: boolean;
 };
 
-const ProductsList = ({ products }: Props) => {
+const ProductsList = ({ products, loadingState, productsExist }: Props) => {
   return (
     <div>
-      {products.map((product) => (
-        <ProductItem key={product.id} product={product} />
-      ))}
+      {!loadingState && productsExist && products.length === 0 && (
+        <span>Sorry, No products match these selections</span>
+      )}
+      {!loadingState &&
+        products &&
+        products.map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
     </div>
   );
 };

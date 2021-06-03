@@ -14,7 +14,6 @@ const Header = () => {
     const fetchCart = async () => {
       try {
         const response = await commerce.cart.retrieve();
-        console.log('response', response);
         setCart(response);
       } catch (error) {
         console.error('There was an error fetching the cart', error);
@@ -36,14 +35,12 @@ const Header = () => {
             <Input icon="search" size="huge" placeholder="Search..." />
           </Form>
           <div
-            className={`cart-item ${
-              cart.total_unique_items ? 'has-items' : ''
-            }`}
+            className={`cart-item ${cart.total_items ? 'has-items' : ''}`}
             onClick={() => setIsOpen(!isOpen)}
           >
             <div className="cart-icon"></div>
-            {cart.total_unique_items ? (
-              <span className="cart-count">{cart.total_unique_items}</span>
+            {cart.total_items ? (
+              <span className="cart-count">{cart.total_items}</span>
             ) : null}
           </div>
         </div>

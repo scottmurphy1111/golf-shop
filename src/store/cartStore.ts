@@ -16,7 +16,6 @@ export const useCartStore = create<CartStoreState>((set) => ({
     set(() => ({ cart: cart }));
   },
   addToCart: async (productId: any, quantity: any, variantData: any) => {
-    console.log('productId', productId);
     try {
       const { cart } = await commerce.cart.add(
         productId,

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import CartItem from './CartItem';
 import { useHistory } from 'react-router-dom';
 import { useCartStore } from '../../store/cartStore';
-import { commerce } from '../../lib/commerce';
 
 type Props = {
   isOpen: boolean;
@@ -40,7 +39,7 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
   };
 
   const renderEmptyCart = () => {
-    if (cart.total_unique_items > 0) {
+    if (cart.total_items > 0) {
       return;
     }
 
@@ -55,7 +54,7 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
   };
 
   const renderCart = () => {
-    if (cart.total_unique_items === 0) {
+    if (cart.total_items === 0) {
       return;
     }
 

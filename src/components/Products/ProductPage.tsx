@@ -10,6 +10,7 @@ import { CHEC_BASE_URL, HEADERS } from '../../utils/constants';
 import { stripHtml } from 'string-strip-html';
 import { useCartStore } from '../../store/cartStore';
 import { getSingleProductId } from '../../utils/getSingleProductId';
+import ProductsHero from './ProductsHero';
 
 const ProductPage = (props: RouteComponentProps) => {
   const [product, setProduct] = useState<Product>();
@@ -110,17 +111,32 @@ const ProductPage = (props: RouteComponentProps) => {
       });
   }, [props, singleProductId]);
 
+  const findVariantGroups = (product: any) => {
+    let groups: any[] = [];
+    product.variant_groups.map((group: any) => {
+      // console.log('group', group.name);
+      groups = [...groups, group.id];
+    });
+
+    return groups;
+  };
+
   const handleAddToCart = (
     id: any,
     quantity: number,
     variantData: any = {}
   ) => {
     let data = {};
+    const reqGroups = findVariantGroups(product);
+
+    console.log('has-group:', reqGroups.includes('vgrp_zkK6oLnjOlXn0Q'));
+
     const colorData = variantData.selectedColor;
     const sizeData = variantData.selectedSize;
 
-    console.log('c data', colorData);
-    console.log('s data', sizeData);
+    console.log('req groups:', reqGroups);
+    console.log('color data:', colorData);
+    console.log('size data:', sizeData);
 
     if (Object.keys(colorData).length) {
       const colorGroup = colorData.groupId;
@@ -138,6 +154,10 @@ const ProductPage = (props: RouteComponentProps) => {
         ...data,
         [sizeGroup]: sizeOption,
       };
+    }
+
+    if (!Object.keys(data).every(reqGroups[0] && reqGroups[1])) {
+      console.log('not ready data');
     }
     // finalData = { [colorGroup]: colorOption, [sizeGroup]: sizeOption };
     console.log('data', data);
@@ -171,135 +191,143 @@ const ProductPage = (props: RouteComponentProps) => {
 
   return (
     <div>
-      {fetchError && (
-        <span>
-          There was a problem getting product info, please
-          <a href="/">start over</a>
-        </span>
-      )}
-      {product && (
-        <>
-          <div className="product-page__wrapper">
-            <div className="image-viewer">
-              <ul>
-                {imageVars.map((image) => (
-                  <li
-                    key={image.id}
-                    ref={imageThumbRef}
-                    data-image={image.id}
-                    onClick={() => handleImageSelect(image.id)}
-                  >
-                    <img
-                      src={`${process.env.PUBLIC_URL}/${image.source}`}
-                      alt={image.source}
-                    />
-                  </li>
-                ))}
-              </ul>
-              <div
-                className="product-page__active-image"
-                data-active-image={selectedImage}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/${selectedImage.source}`}
-                  alt={selectedImage.source}
-                />
-              </div>
-            </div>
-            <div className="product-page__details">
-              <h2>{product.name}</h2>
-              <h3 className="price">{product.price.formatted_with_symbol}</h3>
-              <br />
-              <div className="product-page__make-selections">
-                <h3>Make Your Selections:</h3>
+      <ProductsHero />
 
-                {colorVars &&
-                  colorVars.options &&
-                  colorVars.options.length > 0 && (
-                    <div className="colors">
-                      {colorVars.options.map((color: any) => (
+      <div className="main-container container">
+        {fetchError && (
+          <span>
+            There was a problem getting product info, please
+            <a href="/">start over</a>
+          </span>
+        )}
+        {product && (
+          <>
+            <div className="product-page__wrapper">
+              <div className="image-viewer">
+                <ul>
+                  {imageVars.map((image) => (
+                    <li
+                      key={image.id}
+                      ref={imageThumbRef}
+                      data-image={image.id}
+                      onClick={() => handleImageSelect(image.id)}
+                    >
+                      <img
+                        src={`${process.env.PUBLIC_URL}/${image.source}`}
+                        alt={image.source}
+                      />
+                    </li>
+                  ))}
+                </ul>
+                <div
+                  className="product-page__active-image"
+                  data-active-image={selectedImage}
+                >
+                  <img
+                    src={`${process.env.PUBLIC_URL}/${selectedImage.source}`}
+                    alt={selectedImage.source}
+                  />
+                </div>
+              </div>
+              <div className="product-page__details">
+                <h2>{product.name}</h2>
+                <h3 className="price">{product.price.formatted_with_symbol}</h3>
+                <br />
+                <div className="product-page__make-selections">
+                  <h3>Make Your Selections:</h3>
+
+                  {colorVars &&
+                    colorVars.options &&
+                    colorVars.options.length > 0 && (
+                      <div className="colors">
+                        {colorVars.options.map((color: any) => (
+                          <span
+                            data-active={`${
+                              selectedColor === color ? true : false
+                            }`}
+                            key={color.id}
+                            data-value={color.name.toLowerCase()}
+                            title={color.name}
+                            style={{
+                              backgroundColor: color.name
+                                .toLowerCase()
+                                .replace(' ', ''),
+                            }}
+                            onClick={() =>
+                              handleColorClick(colorVars.id, color)
+                            }
+                          ></span>
+                        ))}
+                        {selectedColor.color && (
+                          <div className="product-page__selection">
+                            {selectedColor.color.name}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  {sizeVars && sizeVars.options && sizeVars.options.length > 0 && (
+                    <div className="sizes">
+                      {sizeVars.options.map((size: any) => (
                         <span
                           data-active={`${
-                            selectedColor === color ? true : false
+                            selectedSize === size ? true : false
                           }`}
-                          key={color.id}
-                          data-value={color.name.toLowerCase()}
-                          title={color.name}
-                          style={{
-                            backgroundColor: color.name
-                              .toLowerCase()
-                              .replace(' ', ''),
-                          }}
-                          onClick={() => handleColorClick(colorVars.id, color)}
-                        ></span>
+                          key={size.id}
+                          data-value={size.name}
+                          onClick={() => handleSizeClick(sizeVars.id, size)}
+                        >
+                          {size.name}
+                        </span>
                       ))}
-                      {selectedColor.color && (
+                      {selectedSize.size && (
                         <div className="product-page__selection">
-                          {selectedColor.color.name}
+                          {selectedSize.size.name}
                         </div>
                       )}
                     </div>
                   )}
-                {sizeVars && sizeVars.options && sizeVars.options.length > 0 && (
-                  <div className="sizes">
-                    {sizeVars.options.map((size: any) => (
-                      <span
-                        data-active={`${selectedSize === size ? true : false}`}
-                        key={size.id}
-                        data-value={size.name}
-                        onClick={() => handleSizeClick(sizeVars.id, size)}
-                      >
-                        {size.name}
-                      </span>
-                    ))}
-                    {selectedSize.size && (
-                      <div className="product-page__selection">
-                        {selectedSize.size.name}
-                      </div>
-                    )}
+                </div>
+                <div className="product-page__actions">
+                  <div className="quantity-container">
+                    <Button
+                      className="quantity-button"
+                      onClick={() => handleQuantityClick(quantity, 'decrease')}
+                      title="Reduce quantity"
+                    >
+                      -
+                    </Button>
+                    <p className="quantity-display">{quantity}</p>
+                    <Button
+                      className="quantity-button"
+                      onClick={() => handleQuantityClick(quantity, 'increase')}
+                      title="Increase quantity"
+                    >
+                      +
+                    </Button>
                   </div>
-                )}
-              </div>
-              <div className="product-page__actions">
-                <div className="quantity-container">
                   <Button
-                    className="quantity-button"
-                    onClick={() => handleQuantityClick(quantity, 'decrease')}
-                    title="Reduce quantity"
+                    fluid
+                    primary
+                    size="massive"
+                    onClick={() =>
+                      handleAddToCart(product.id, quantity, {
+                        selectedColor,
+                        selectedSize,
+                      })
+                    }
                   >
-                    -
-                  </Button>
-                  <p className="quantity-display">{quantity}</p>
-                  <Button
-                    className="quantity-button"
-                    onClick={() => handleQuantityClick(quantity, 'increase')}
-                    title="Increase quantity"
-                  >
-                    +
+                    <Icon name="lock" />
+                    Add to Cart
                   </Button>
                 </div>
-                <Button
-                  fluid
-                  primary
-                  size="massive"
-                  onClick={() =>
-                    handleAddToCart(product.id, quantity, {
-                      selectedColor,
-                      selectedSize,
-                    })
-                  }
-                >
-                  <Icon name="lock" />
-                  Add to Cart
-                </Button>
+                <hr />
+                <p>{stripHtml(product.description).result}</p>
               </div>
-              <hr />
-              <p>{stripHtml(product.description).result}</p>
             </div>
-          </div>
-          <Link to={`/products?category=apparel`}>back to products</Link>
-        </>
-      )}
+            <Link to={`/products?category=apparel`}>back to products</Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };

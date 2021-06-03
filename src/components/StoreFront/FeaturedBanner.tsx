@@ -3,18 +3,20 @@ import FeaturedBannerItem from './FeaturedBannerItem';
 
 const FeaturedBanner = () => {
   return (
-    <div>
+    <section className="featured-banner">
       <FeaturedBannerItem
         headline={'Headwear'}
-        snippet={'headwear snippet'}
-        link={'/headwear'}
+        snippet={'Check Out Our Selection'}
+        link={'/products?category=apparel'}
+        bg={'mc-image.jpg'}
       />
       <FeaturedBannerItem
         headline={'Apparel'}
-        snippet={'apparel snippet'}
-        link={'/apparel'}
+        snippet={'Check Out Our Latest Gear'}
+        link={'/products?category=apparel'}
+        bg={'mc-image3.jpg'}
       />
-    </div>
+    </section>
   );
 };
 
