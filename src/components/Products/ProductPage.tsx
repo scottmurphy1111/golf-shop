@@ -22,6 +22,7 @@ const ProductPage = (props: RouteComponentProps) => {
   const [selectedSize, setSelectedSize] = useState<any>({});
   const [quantity, setQuantity] = useState(1);
   const [selectedVariants, setSelectedVariants] = useState<any>(null);
+  const [selectionsError, setSelectionsError] = useState<boolean>(false);
 
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -115,7 +116,7 @@ const ProductPage = (props: RouteComponentProps) => {
     let groups: any[] = [];
     product.variant_groups.map((group: any) => {
       // console.log('group', group.name);
-      groups = [...groups, group.id];
+      groups = [...groups, group.id].sort();
     });
 
     return groups;
@@ -126,15 +127,15 @@ const ProductPage = (props: RouteComponentProps) => {
     quantity: number,
     variantData: any = {}
   ) => {
+    setSelectionsError(false);
     let data = {};
     const reqGroups = findVariantGroups(product);
 
-    console.log('has-group:', reqGroups.includes('vgrp_zkK6oLnjOlXn0Q'));
+    console.log('req groups', reqGroups);
 
     const colorData = variantData.selectedColor;
     const sizeData = variantData.selectedSize;
 
-    console.log('req groups:', reqGroups);
     console.log('color data:', colorData);
     console.log('size data:', sizeData);
 
@@ -156,12 +157,14 @@ const ProductPage = (props: RouteComponentProps) => {
       };
     }
 
-    if (!Object.keys(data).every(reqGroups[0] && reqGroups[1])) {
-      console.log('not ready data');
+    const selectionsValid =
+      reqGroups.join(',') === Object.keys(data).sort().join(',');
+
+    if (selectionsValid) {
+      addToCart(id, quantity, data);
+    } else {
+      setSelectionsError(true);
     }
-    // finalData = { [colorGroup]: colorOption, [sizeGroup]: sizeOption };
-    console.log('data', data);
-    addToCart(id, quantity, data);
   };
 
   const handleQuantityClick = (quantity: any, type: any) => {
@@ -174,10 +177,12 @@ const ProductPage = (props: RouteComponentProps) => {
   };
 
   const handleColorClick = (groupId: any, color: any) => {
+    setSelectionsError(false);
     setSelectedColor({ groupId, color });
   };
 
   const handleSizeClick = (groupId: any, size: any) => {
+    setSelectionsError(false);
     setSelectedSize({ groupId, size });
   };
 
@@ -191,8 +196,6 @@ const ProductPage = (props: RouteComponentProps) => {
 
   return (
     <div>
-      <ProductsHero />
-
       <div className="main-container container">
         {fetchError && (
           <span>
@@ -235,7 +238,11 @@ const ProductPage = (props: RouteComponentProps) => {
                 <br />
                 <div className="product-page__make-selections">
                   <h3>Make Your Selections:</h3>
-
+                  {selectionsError && (
+                    <span style={{ color: 'tomato' }}>
+                      All product selections must be picked, please choose below
+                    </span>
+                  )}
                   {colorVars &&
                     colorVars.options &&
                     colorVars.options.length > 0 && (
