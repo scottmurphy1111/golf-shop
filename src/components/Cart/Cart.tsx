@@ -29,7 +29,9 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
     return () => {
       window.removeEventListener('click', handleClickCart, true);
     };
-  }, [handleClickCart]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const goToCheckout = () => {
     history.push(`/checkout/${cart.id}`);
