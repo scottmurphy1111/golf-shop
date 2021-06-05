@@ -7,7 +7,6 @@ import { useStore } from '../../store/store';
 import { extractParams } from '../../utils/extractParams';
 import { getProducts } from '../../utils/getProducts';
 import CategoriesSection from '../Shared/CategoriesSection';
-import FeaturedBanner from '../StoreFront/FeaturedBanner';
 import ProductsFiltersContainer from './ProductsFiltersContainer';
 import ProductsHero from './ProductsHero';
 import ProductsList from './ProductsList';

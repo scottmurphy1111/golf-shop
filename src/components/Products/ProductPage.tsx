@@ -10,7 +10,6 @@ import { CHEC_BASE_URL, HEADERS } from '../../utils/constants';
 import { stripHtml } from 'string-strip-html';
 import { useCartStore } from '../../store/cartStore';
 import { getSingleProductId } from '../../utils/getSingleProductId';
-import ProductsHero from './ProductsHero';
 
 const ProductPage = (props: RouteComponentProps) => {
   const [product, setProduct] = useState<Product>();
@@ -21,7 +20,6 @@ const ProductPage = (props: RouteComponentProps) => {
   const [sizeVars, setSizeVars] = useState<any>([]);
   const [selectedSize, setSelectedSize] = useState<any>({});
   const [quantity, setQuantity] = useState(1);
-  const [selectedVariants, setSelectedVariants] = useState<any>(null);
   const [selectionsError, setSelectionsError] = useState<boolean>(false);
 
   const addToCart = useCartStore((state) => state.addToCart);
@@ -107,15 +105,14 @@ const ProductPage = (props: RouteComponentProps) => {
           setSizeVars(sizes);
         }
       })
-      .then(() => {
-        // setLoading(false);
-      });
+      .catch((err) =>
+        console.log('There was an error getting product options', err)
+      );
   }, [props, singleProductId]);
 
   const findVariantGroups = (product: any) => {
     let groups: any[] = [];
-    product.variant_groups.map((group: any) => {
-      // console.log('group', group.name);
+    product.variant_groups.forEach((group: any) => {
       groups = [...groups, group.id].sort();
     });
 
