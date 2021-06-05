@@ -29,7 +29,7 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
     return () => {
       window.removeEventListener('click', handleClickCart, true);
     };
-  }, []);
+  }, [handleClickCart]);
 
   const goToCheckout = () => {
     history.push(`/checkout/${cart.id}`);

@@ -21,7 +21,7 @@ const Header = () => {
     };
 
     fetchCart();
-  }, []);
+  }, [setCart]);
 
   return (
     <div className="header-container">
