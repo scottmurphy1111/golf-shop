@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { commerce } from '../../lib/commerce';
 import { useCartStore } from '../../store/cartStore';
-import CartItem from '../Cart/CartItem';
 import ReviewOrder from './ReviewOrder';
 
 const CheckoutContainer = (props: RouteComponentProps) => {
