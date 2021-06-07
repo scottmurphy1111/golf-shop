@@ -31,6 +31,9 @@ export const useCartStore = create<CartStoreState>((set) => ({
     try {
       const { cart } = await commerce.cart.update(lineItemId, { quantity });
       set(() => ({ cart: cart }));
+      if (!cart.line_items.length) {
+        localStorage.removeItem('cart-id');
+      }
     } catch (error) {
       console.log('There was an error updating the cart items', error);
     }
@@ -39,6 +42,9 @@ export const useCartStore = create<CartStoreState>((set) => ({
     try {
       const { cart } = await commerce.cart.remove(lineItemId);
       set(() => ({ cart: cart }));
+      if (!cart.line_items.length) {
+        localStorage.removeItem('cart-id');
+      }
     } catch (error) {
       console.error(
         'There was an error removing the item from the cart',
@@ -50,6 +56,9 @@ export const useCartStore = create<CartStoreState>((set) => ({
     try {
       const { cart } = await commerce.cart.empty();
       set(() => ({ cart: cart }));
+      if (!cart.line_items.length) {
+        localStorage.removeItem('cart-id');
+      }
     } catch (error) {
       console.error('There was an error emptying the cart', error);
     }

@@ -34,8 +34,8 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
   }, []);
 
   const goToCheckout = () => {
-    history.push(`/checkout/${cart.id}`);
     localStorage.setItem('cart-id', cart.id);
+    history.push(`/checkout`);
     setIsOpen(false);
     // setCheckout(true);
   };

@@ -577,7 +577,8 @@ template {
 .checkout-form-wrapper {
   background: rgba(255, 255, 255, 0.8);
   padding: 2.4rem;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  padding-top: 132px; }
 
 .checkout__form {
   display: flex;
@@ -585,6 +586,27 @@ template {
   .checkout__form > input,
   .checkout__form select {
     margin-bottom: 1.6rem; }
+
+.checkout__review-order .cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.6rem; }
+  .checkout__review-order .cart-item .cart-item__image {
+    width: 100px;
+    flex: 1 1 auto; }
+  .checkout__review-order .cart-item .cart-item__details {
+    flex: 1 1 auto;
+    margin: 0 1.6rem;
+    align-self: flex-start; }
+  .checkout__review-order .cart-item .cart-item__details-qty {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 80px; }
+  .checkout__review-order .cart-item .cart-item__remove-button {
+    flex: 1 1 auto; }
 
 html {
   height: 100%;

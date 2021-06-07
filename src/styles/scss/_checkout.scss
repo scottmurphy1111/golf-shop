@@ -2,6 +2,7 @@
   background: rgba(255, 255, 255, 0.8);
   padding: 2.4rem;
   box-sizing: border-box;
+  padding-top: 132px;
 }
 
 .checkout__form {
@@ -11,5 +12,37 @@
   > input,
   select {
     margin-bottom: 1.6rem;
+  }
+}
+
+.checkout__review-order {
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1.6rem;
+
+    .cart-item__image {
+      width: 100px;
+      flex: 1 1 auto;
+    }
+
+    .cart-item__details {
+      flex: 1 1 auto;
+      margin: 0 1.6rem;
+      align-self: flex-start;
+    }
+
+    .cart-item__details-qty {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 80px;
+    }
+
+    .cart-item__remove-button {
+      flex: 1 1 auto;
+    }
   }
 }
