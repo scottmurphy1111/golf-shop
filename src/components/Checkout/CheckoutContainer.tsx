@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { commerce } from '../../lib/commerce';
 import { useCartStore } from '../../store/cartStore';
+import OrderSummary from './OrderSummary';
+import PaymentContainer from './PaymentContainer';
 import ReviewOrder from './ReviewOrder';
+import ShippingForm from './ShippingForm';
 
 const CheckoutContainer = (props: RouteComponentProps) => {
   const cart = useCartStore((state) => state.cart);
@@ -43,13 +46,9 @@ const CheckoutContainer = (props: RouteComponentProps) => {
         <>
           <h2>Secure Checkout</h2>
           <ReviewOrder />
-          <h3>2. Delivery Address *All fields are required</h3>
-          <form>
-            <input type="text" placeholder="shipping,,," />
-          </form>
-          <h3>3. Select Payment Method</h3>
-          PAYMENT INFO
-          <button>Pay Now</button>
+          <ShippingForm />
+          <PaymentContainer />
+          <OrderSummary />
         </>
       )}
     </div>

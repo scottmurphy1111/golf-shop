@@ -15,6 +15,7 @@ const CategoriesSection = ({ headline, type }: Props) => {
   const fetchCats = useStore((state) => state.setAllCats);
   const categories = useStore((state) => state.allCats);
   const cats = useSetCats(categories, storeFrontCats);
+  const currentCat = useStore((state) => state.currentCat);
 
   useEffect(() => {
     fetchCats();
