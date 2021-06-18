@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Category } from '../models/Category';
 
-const useSetCats = (allCats: Category[], catNames: string[]): Category[] => {
+const useSetCats = (allCats: Category[], catNames: string[], activeCat: string): Category[] => {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    const getCats = allCats.reduce((acc: Category[], category: Category) => {
+    let getCats = allCats.reduce((acc: Category[], category: Category) => {
       catNames.forEach((cat: string, i: number) => {
         return category.slug === cat ? (acc[i] = category) : null;
       });
-
       return acc;
     }, []);
 
+    getCats.forEach(category => {
+      return activeCat === category.slug ? category.active = true : category.active = false;
+    });
+
     setCategories(getCats);
-  }, [allCats, catNames]);
+  }, [activeCat, allCats, catNames]);
 
   return categories;
 };

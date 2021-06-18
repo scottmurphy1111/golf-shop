@@ -527,7 +527,14 @@ template {
       flex: 0 1 auto;
       font-size: 1.6rem;
       margin: 0 1.6rem 0.8rem 0;
-      cursor: pointer; }
+      cursor: pointer;
+      position: relative; }
+      .categories-container ul li[data-active=true]:before {
+        content: '';
+        position: absolute;
+        left: -1rem;
+        border-left: 4px solid #2185d0;
+        height: 2rem; }
 
 .cat-page ul {
   flex-direction: column;
@@ -535,6 +542,12 @@ template {
 
 .products-filters-container {
   flex: 1 1 30%; }
+  .products-filters-container h3 {
+    margin-bottom: 0.8rem; }
+  .products-filters-container ul {
+    margin-bottom: 1.6rem; }
+  .products-filters-container input {
+    margin-right: 0.8rem; }
 
 .featured-banner {
   display: flex;
@@ -652,6 +665,9 @@ h1 {
 h2 {
   font-size: 2.4rem;
   margin-bottom: 1.6rem; }
+
+h3 {
+  font-size: 2rem; }
 
 h2,
 h3 {

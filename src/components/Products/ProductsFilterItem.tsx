@@ -24,7 +24,7 @@ const ProductsFilterItem = React.memo(({ filter, updateFilters }: Props) => {
   }, [filter, resetFilterCats]);
 
   return (
-    <>
+    <li>
       <label style={{ display: 'block' }}>
         <input
           ref={checkboxRef}
@@ -36,7 +36,7 @@ const ProductsFilterItem = React.memo(({ filter, updateFilters }: Props) => {
         />
         {filter.name}
       </label>
-    </>
+    </li>
   );
 });
 

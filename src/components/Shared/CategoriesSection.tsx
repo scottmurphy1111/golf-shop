@@ -14,9 +14,10 @@ const CategoriesSection = ({ headline, type }: Props) => {
   const [localCats, setLocalCats] = useState<Category[]>([]);
   const fetchCats = useStore((state) => state.setAllCats);
   const categories = useStore((state) => state.allCats);
-  const cats = useSetCats(categories, storeFrontCats);
   const currentCat = useStore((state) => state.currentCat);
+  const cats = useSetCats(categories, storeFrontCats, currentCat);
 
+  console.log('current Category', currentCat);
   useEffect(() => {
     fetchCats();
   }, [fetchCats]);

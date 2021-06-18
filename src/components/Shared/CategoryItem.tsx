@@ -8,6 +8,7 @@ type Props = {
 };
 
 const CategoryItem = ({ category }: Props) => {
+  console.log('category wasc', category);
   const clearCheckedFilterVals = useStore(
     (state) => state.clearCheckedFilterVals
   );
@@ -28,7 +29,7 @@ const CategoryItem = ({ category }: Props) => {
     setResetFilterCats(true);
   };
 
-  return <li onClick={handleClick}>{category.name}</li>;
+  return <li data-active={category.active} onClick={handleClick}>{category.name}</li>;
 };
 
 export default CategoryItem;

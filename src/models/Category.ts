@@ -6,4 +6,5 @@ export type Category = {
   name: string;
   products: number;
   slug: string;
+  active?: boolean;
 };

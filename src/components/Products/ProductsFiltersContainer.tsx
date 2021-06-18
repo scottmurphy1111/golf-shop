@@ -73,24 +73,28 @@ const ProductsFiltersContainer = ({ category }: Props) => {
 
   return (
     <div className="">
-      <h2>Filter By:</h2>
-      {localFilters &&
-        localFilters.filters.map((filter) => (
-          <ProductsFilterItem
-            key={filter.name}
-            filter={filter}
-            updateFilters={updateFilters}
-          />
-        ))}
-      <h2>Status: </h2>
-      {localFilters &&
-        localFilters.status.map((status) => (
-          <ProductsFilterItem
-            key={status.name}
-            filter={status}
-            updateFilters={updateFilters}
-          />
-        ))}
+      <h3>Filter By:</h3>
+      <ul>
+        {localFilters &&
+          localFilters.filters.map((filter) => (
+            <ProductsFilterItem
+              key={filter.name}
+              filter={filter}
+              updateFilters={updateFilters}
+            />
+          ))}
+      </ul>
+      <h3>Status: </h3>
+      <ul>
+        {localFilters &&
+          localFilters.status.map((status) => (
+            <ProductsFilterItem
+              key={status.name}
+              filter={status}
+              updateFilters={updateFilters}
+            />
+          ))}
+      </ul>
     </div>
   );
 };
