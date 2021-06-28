@@ -13,7 +13,7 @@
       cursor: pointer;
       position: relative;
 
-      &[data-active=true] {
+      &[data-active='true'] {
         &:before {
           content: '';
           position: absolute;
@@ -27,11 +27,31 @@
 }
 
 .home-page {
+  ul {
+    justify-content: space-around;
+    align-items: flex-end;
+
+    > li {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      img {
+        width: 150px;
+        margin-bottom: 1.6rem;
+      }
+    }
+  }
 }
 
 .cat-page {
   ul {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  img {
+    display: none;
   }
 }

@@ -29,7 +29,12 @@ const CategoryItem = ({ category }: Props) => {
     setResetFilterCats(true);
   };
 
-  return <li data-active={category.active} onClick={handleClick}>{category.name}</li>;
+  return (
+    <li data-active={category.active} onClick={handleClick}>
+      <img src={`${process.env.PUBLIC_URL}/${category.slug}-cat.png`} alt="" />
+      {category.name}
+    </li>
+  );
 };
 
 export default CategoryItem;
