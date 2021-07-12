@@ -62,9 +62,12 @@ const ProductsFiltersContainer = ({ category }: Props) => {
 
   useEffect(() => {
     const filterParams = new URLSearchParams(location.search);
+    console.log('filterparams', filterParams);
+    console.log('cfvs 👍🏻', checkedFilterVals);
     if (checkedFilterVals.length) {
       filterParams.set('filters', checkedFilterVals.join(','));
     } else {
+      console.log('firled 🍕');
       filterParams.delete('filters');
     }
 

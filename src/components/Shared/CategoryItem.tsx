@@ -8,7 +8,6 @@ type Props = {
 };
 
 const CategoryItem = ({ category }: Props) => {
-  console.log('category wasc', category);
   const clearCheckedFilterVals = useStore(
     (state) => state.clearCheckedFilterVals
   );

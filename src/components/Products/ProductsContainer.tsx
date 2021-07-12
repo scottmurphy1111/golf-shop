@@ -12,20 +12,24 @@ import ProductsHero from './ProductsHero';
 import ProductsList from './ProductsList';
 
 const ProductsContainer = (props: RouteComponentProps) => {
+  console.log('props', props);
   const [loadingState, setLoadingState] = useState<boolean>(false);
   const [productsExist, setProductsExist] = useState<boolean>(false);
   const [params, setParams] = useState<PageParams>({});
   const [isClubs, setIsClubs] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [slugs, setSlugs] = useState<(string | null)[]>([]);
+  const [slugs, setSlugs] = useState<(string | null | undefined)[]>([]);
   const currentCat = useStore((state) => state.currentCat);
   const setCurrentCat = useStore((state) => state.setCurrentCat);
   const checkedFilterVals = useStore((state) => state.checkedFilterVals);
 
   const extractedParams = useMemo(() => extractParams(props), [props]);
+  console.log('extracted params: ', extractedParams);
 
   useEffect(() => {
-    setParams(extractedParams);
+    if (extractedParams !== undefined) {
+      setParams(extractedParams);
+    }
 
     return () => {
       setParams({});

@@ -1,6 +1,6 @@
 .featured-banner {
   display: flex;
-  padding-top: 132px;
+  padding-top: 80px;
 
   .featured-banner-item {
     display: flex;
@@ -18,7 +18,7 @@
     bottom: 0;
     width: 100%;
     justify-content: space-between;
-    background: linear-gradient(0deg, #141414, transparent);
+    background: linear-gradient(0deg, $gs_black, transparent);
     height: 100px;
     align-items: center;
     color: #fff;

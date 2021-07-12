@@ -7,7 +7,7 @@ const FeaturedBanner = () => {
       <FeaturedBannerItem
         headline={'Headwear'}
         snippet={'Check Out Our Selection'}
-        link={'/products?category=apparel'}
+        link={'/products?category=apparel&filters=tops'}
         bg={'mc-image.jpg'}
       />
       <FeaturedBannerItem

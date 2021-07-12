@@ -1,3 +1,4 @@
 export type PageParams = {
-  [key: string]: string | null;
+  category?: string | null;
+  filters?: string | null;
 };

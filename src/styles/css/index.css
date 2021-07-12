@@ -172,29 +172,29 @@ template {
 .header-container {
   display: flex;
   flex-wrap: nowrap;
-  height: 132px;
+  height: 80px;
   background: #fff;
   position: fixed;
   padding: 0 2.4rem;
   box-sizing: border-box;
   box-shadow: 0 2px 10px rgba(200, 200, 200, 0.75);
   width: 100%;
-  padding-bottom: 132px;
+  padding-bottom: 80px;
   top: 0;
   z-index: 3;
   left: 0; }
   .header-container header {
     width: 100%;
-    height: 132px;
+    height: 80px;
     display: flex;
-    color: #141414;
+    color: #002828;
     align-items: center; }
     .header-container header .cart-item {
       margin-bottom: 0; }
   .header-container .logo {
-    width: 112px;
-    height: 83px;
-    flex: 1 1 125px;
+    width: 240px;
+    height: 40px;
+    flex: 1 1 240px;
     display: inline-block;
     background: url(../../assets/golf-shop-logo.svg) no-repeat;
     background-size: contain;
@@ -204,7 +204,7 @@ template {
       height: 100%; }
   .header-container .cart-container {
     display: flex;
-    flex: 1 1 calc(100% - 99px);
+    flex: 1 1 calc(100% - 240px);
     justify-content: flex-end;
     align-items: center; }
     .header-container .cart-container form {
@@ -386,7 +386,7 @@ template {
 
 .product-hero-container {
   display: flex;
-  padding-top: 132px;
+  padding-top: 80px;
   width: 100%;
   height: 100%;
   justify-content: center; }
@@ -403,7 +403,7 @@ template {
   padding: 2.4rem;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 4px;
-  margin-top: 132px; }
+  margin-top: 80px; }
   .product-page__wrapper .image-viewer {
     flex: 1 1 60%;
     display: flex;
@@ -445,7 +445,7 @@ template {
           opacity: 1; }
         .product-page__wrapper .product-page__details .colors span[data-active='true'],
         .product-page__wrapper .product-page__details .sizes span[data-active='true'] {
-          border: 1px solid #141414;
+          border: 1px solid #002828;
           opacity: 1; }
       .product-page__wrapper .product-page__details .colors .product-page__selection,
       .product-page__wrapper .product-page__details .sizes .product-page__selection {
@@ -476,10 +476,10 @@ template {
     margin-bottom: 1.6rem; }
 
 .cart {
-  color: #141414;
+  color: #002828;
   position: fixed;
   z-index: 3;
-  top: 132px;
+  top: 80px;
   right: 0;
   width: 50%;
   min-width: 350px;
@@ -566,7 +566,7 @@ template {
 
 .featured-banner {
   display: flex;
-  padding-top: 132px; }
+  padding-top: 80px; }
   .featured-banner .featured-banner-item {
     display: flex;
     flex: 1 1 auto;
@@ -581,7 +581,7 @@ template {
     bottom: 0;
     width: 100%;
     justify-content: space-between;
-    background: linear-gradient(0deg, #141414, transparent);
+    background: linear-gradient(0deg, #002828, transparent);
     height: 100px;
     align-items: center;
     color: #fff;
@@ -606,7 +606,7 @@ template {
   background: rgba(255, 255, 255, 0.8);
   padding: 2.4rem;
   box-sizing: border-box;
-  padding-top: 132px; }
+  padding-top: 80px; }
   .checkout-form-wrapper h2 {
     margin-top: 1.6rem; }
 
@@ -658,7 +658,8 @@ body {
   min-height: 100%;
   font-weight: 400;
   font-size: 1.6rem;
-  background-color: transparent; }
+  background-color: transparent;
+  color: #002828; }
 
 h1,
 h2,

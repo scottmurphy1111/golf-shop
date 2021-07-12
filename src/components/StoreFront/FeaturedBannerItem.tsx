@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useStore } from '../../store/store';
 
 type FeatureItemProps = {
   headline: string;
@@ -13,8 +15,14 @@ const FeaturedBannerItem = ({
   link,
   bg,
 }: FeatureItemProps) => {
-  const handleClick = (link: string) => {
-    console.log(link);
+  const setCheckedFilterVals = useStore((state) => state.setCheckedFilterVals);
+  const history = useHistory();
+  const handleClick = (buttonLink: string) => {
+    const applyfilterVal = buttonLink.match(/filters=(.*)/);
+    if (applyfilterVal) {
+      setCheckedFilterVals(applyfilterVal[1]);
+    }
+    history.push(buttonLink);
   };
 
   return (
