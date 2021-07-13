@@ -12,7 +12,6 @@ import ProductsHero from './ProductsHero';
 import ProductsList from './ProductsList';
 
 const ProductsContainer = (props: RouteComponentProps) => {
-  console.log('props', props);
   const [loadingState, setLoadingState] = useState<boolean>(false);
   const [productsExist, setProductsExist] = useState<boolean>(false);
   const [params, setParams] = useState<PageParams>({});
@@ -24,7 +23,6 @@ const ProductsContainer = (props: RouteComponentProps) => {
   const checkedFilterVals = useStore((state) => state.checkedFilterVals);
 
   const extractedParams = useMemo(() => extractParams(props), [props]);
-  console.log('extracted params: ', extractedParams);
 
   useEffect(() => {
     if (extractedParams !== undefined) {

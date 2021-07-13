@@ -9,6 +9,7 @@ type Props = {
 
 const ProductsFilterItem = React.memo(({ filter, updateFilters }: Props) => {
   const resetFilterCats = useStore((state) => state.resetFilterCats);
+  const checkedFilterVals = useStore((state) => state.checkedFilterVals);
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +17,12 @@ const ProductsFilterItem = React.memo(({ filter, updateFilters }: Props) => {
     updateFilters(val);
     filter.checked = !filter.checked;
   };
+
+  useEffect(() => {
+    if (filter.name === checkedFilterVals[0]) {
+      filter.checked = true;
+    }
+  }, [checkedFilterVals, filter]);
 
   useEffect(() => {
     if (resetFilterCats) {

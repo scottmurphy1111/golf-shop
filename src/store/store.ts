@@ -19,7 +19,6 @@ type StoreState = {
 };
 
 const removeFilter = (currentVals: string[], val: string) => {
-  console.log('remove filter checkedVals', currentVals);
   return currentVals.filter((item: string) => (item !== val ? item : null));
 };
 

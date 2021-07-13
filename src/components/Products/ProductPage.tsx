@@ -128,13 +128,8 @@ const ProductPage = (props: RouteComponentProps) => {
     let data = {};
     const reqGroups = findVariantGroups(product);
 
-    console.log('req groups', reqGroups);
-
     const colorData = variantData.selectedColor;
     const sizeData = variantData.selectedSize;
-
-    console.log('color data:', colorData);
-    console.log('size data:', sizeData);
 
     if (Object.keys(colorData).length) {
       const colorGroup = colorData.groupId;
