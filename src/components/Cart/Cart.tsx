@@ -50,7 +50,11 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
         <p className="cart__none">
           You have no items in your shopping cart, start adding some!
         </p>
-        <button onClick={() => setIsOpen(!isOpen)}>Close Cart</button>
+        <div className="cart_ctas">
+          <button className="remove" onClick={() => setIsOpen(!isOpen)}>
+            Close Cart
+          </button>
+        </div>
       </>
     );
   };
@@ -62,6 +66,9 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
 
     return (
       <>
+        <button className="close_btn" onClick={() => setIsOpen(!isOpen)}>
+          X
+        </button>
         {cart.line_items.map((lineItem: any) => (
           <CartItem item={lineItem} key={lineItem.id} />
         ))}
@@ -71,11 +78,14 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
             {cart.subtotal.formatted_with_symbol}
           </p>
         </div>
-        <button className="cart__btn-empty" onClick={handleEmptyCart}>
-          Empty cart
-        </button>
-        <button onClick={goToCheckout}>Checkout</button>
-        <button onClick={() => setIsOpen(!isOpen)}>Close Cart</button>
+        <div className="cart_ctas">
+          <button className="cart__btn-empty link" onClick={handleEmptyCart}>
+            Empty cart
+          </button>
+          <button className="advance" onClick={goToCheckout}>
+            Checkout
+          </button>
+        </div>
       </>
     );
   };

@@ -95,9 +95,10 @@ button {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   border: none;
-  padding: 0.8rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.25s ease-out;
 
   &.primary {
     background-color: $gs_blue;
@@ -109,7 +110,22 @@ button {
   }
 
   &.secondary {
-    background-color: #ccc;
+    background-color: $gs_lt_gray;
+  }
+
+  &.remove {
+    background-color: $gs_red;
+    color: #fff;
+  }
+
+  &.link {
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  &.advance {
+    background-color: $gs_green;
+    color: #fff;
   }
 }
 

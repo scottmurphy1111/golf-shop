@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useCartStore } from '../../store/cartStore';
 
 type Props = {
@@ -8,7 +9,13 @@ type Props = {
 const CartItem = ({ item }: Props) => {
   const updateCartQty = useCartStore((state) => state.updateCartQty);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const history = useHistory();
   //setCheckout // TODO
+
+  const editItem = (id: string) => {
+    history.push(`/product/${id}`);
+  };
+
   return (
     <div className="cart-item">
       <img
@@ -46,11 +53,14 @@ const CartItem = ({ item }: Props) => {
         </div>
       </div>
       <button
-        className="cart-item__remove-button"
+        className="cart-item__remove-button remove"
         type="button"
         onClick={() => removeFromCart(item.id)}
       >
         Remove
+      </button>
+      <button className="link" onClick={() => editItem(item.id)}>
+        Edit
       </button>
     </div>
   );

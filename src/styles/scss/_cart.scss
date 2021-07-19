@@ -6,7 +6,7 @@
   right: 0;
   width: 50%;
   min-width: 350px;
-  min-height: 25vh;
+  min-height: 20vh;
   padding: 1.6rem;
   background: #f4f4f4;
   transition: all 0.5s ease-in-out;
@@ -51,5 +51,23 @@
     .cart-item__remove-button {
       flex: 1 1 auto;
     }
+  }
+
+  .close_btn {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    top: 0;
+  }
+
+  .cart_total {
+    margin-bottom: 1.6rem;
+  }
+
+  .cart_ctas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

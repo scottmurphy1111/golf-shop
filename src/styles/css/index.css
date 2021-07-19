@@ -483,7 +483,7 @@ template {
   right: 0;
   width: 50%;
   min-width: 350px;
-  min-height: 25vh;
+  min-height: 20vh;
   padding: 1.6rem;
   background: #f4f4f4;
   transition: all 0.5s ease-in-out;
@@ -515,6 +515,18 @@ template {
       width: 80px; }
     .cart .cart-item .cart-item__remove-button {
       flex: 1 1 auto; }
+  .cart .close_btn {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    top: 0; }
+  .cart .cart_total {
+    margin-bottom: 1.6rem; }
+  .cart .cart_ctas {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
 
 .categories-container {
   margin-bottom: 1.6rem; }
@@ -708,9 +720,10 @@ button {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   border: none;
-  padding: 0.8rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 4px;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: all 0.25s ease-out; }
   button.primary {
     background-color: #2185d0;
     color: #fff; }
@@ -718,6 +731,15 @@ button {
       background-color: #1775bd; }
   button.secondary {
     background-color: #ccc; }
+  button.remove {
+    background-color: #bb1929;
+    color: #fff; }
+  button.link {
+    background-color: transparent;
+    text-decoration: underline; }
+  button.advance {
+    background-color: #00a13e;
+    color: #fff; }
 
 .ui.segment {
   font-size: 1.6rem; }

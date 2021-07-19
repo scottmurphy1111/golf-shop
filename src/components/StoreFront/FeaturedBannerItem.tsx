@@ -33,7 +33,9 @@ const FeaturedBannerItem = ({
           <h3>{headline}</h3>
           <p>{snippet}</p>
         </span>
-        <button onClick={() => handleClick(link)}>Shop Now</button>
+        <button className="primary" onClick={() => handleClick(link)}>
+          Shop Now
+        </button>
       </div>
     </div>
   );
