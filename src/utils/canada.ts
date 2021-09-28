@@ -51,4 +51,4 @@ export const canada = [
     text: 'Yukon',
     value: 'YT',
   },
-];
+]

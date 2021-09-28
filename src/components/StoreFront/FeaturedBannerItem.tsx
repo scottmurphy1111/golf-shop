@@ -1,13 +1,14 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useStore } from '../../store/store';
+import React from 'react'
+import {useHistory} from 'react-router-dom'
+
+import {useStore} from '../../store/store'
 
 type FeatureItemProps = {
-  headline: string;
-  snippet: string;
-  link: string;
-  bg: string;
-};
+  headline: string
+  snippet: string
+  link: string
+  bg: string
+}
 
 const FeaturedBannerItem = ({
   headline,
@@ -15,15 +16,15 @@ const FeaturedBannerItem = ({
   link,
   bg,
 }: FeatureItemProps) => {
-  const setCheckedFilterVals = useStore((state) => state.setCheckedFilterVals);
-  const history = useHistory();
+  const setCheckedFilterVals = useStore(state => state.setCheckedFilterVals)
+  const history = useHistory()
   const handleClick = (buttonLink: string) => {
-    const applyfilterVal = buttonLink.match(/filters=(.*)/);
+    const applyfilterVal = buttonLink.match(/filters=(.*)/)
     if (applyfilterVal) {
-      setCheckedFilterVals(applyfilterVal[1]);
+      setCheckedFilterVals(applyfilterVal[1])
     }
-    history.push(buttonLink);
-  };
+    history.push(buttonLink)
+  }
 
   return (
     <div className="featured-banner-item">
@@ -38,7 +39,7 @@ const FeaturedBannerItem = ({
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FeaturedBannerItem;
+export default FeaturedBannerItem

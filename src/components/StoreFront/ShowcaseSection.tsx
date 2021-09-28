@@ -1,50 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { commerce } from '../../lib/commerce';
-import { Product } from '../../models/Product';
-import { useStore } from '../../store/store';
+import {Product} from '@chec/commerce.js/types/product'
+import React, {useEffect, useState} from 'react'
+import {useHistory} from 'react-router-dom'
+
+import {commerce} from '../../lib/commerce'
+// import {Product} from '../../models/Product'
+import {useStore} from '../../store/store'
 
 type ShowcaseProps = {
-  headline: string;
-  slug: string;
-};
+  headline: string
+  slug: string
+}
 
-const ShowcaseSection = ({ headline, slug }: ShowcaseProps) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const setSingleProductId = useStore((state) => state.setSingleProductId);
+const ShowcaseSection = ({headline, slug}: ShowcaseProps) => {
+  const [products, setProducts] = useState<Product[]>([])
+  const setSingleProductId = useStore(state => state.setSingleProductId)
 
-  let history = useHistory();
+  const history = useHistory()
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
-        const { data } = await commerce.products.list({
+        const {data} = await commerce.products.list({
           category_slug: [slug],
-        });
+        })
         if (data) {
-          setProducts(data);
+          setProducts(data)
         }
       } catch (error) {
-        console.log(
-          'There was an error fetching products by categories',
-          error
-        );
+        console.log('There was an error fetching products by categories', error)
       }
-    };
-    fetchProductsByCategory();
+    }
+    fetchProductsByCategory()
 
     return () => {
-      setProducts([]);
-    };
-  }, [slug]);
+      setProducts([])
+    }
+  }, [slug])
 
   const handleClick = (product: Product) => {
-    window.scrollTo(0, 0);
-    setSingleProductId(product.id);
+    window.scrollTo(0, 0)
+    setSingleProductId(product.id)
     // setProductName(product.name);
-    localStorage.setItem('product-id', product.id);
-    history.push(`/product/${product.id}`);
-  };
+    localStorage.setItem('product-id', product.id)
+    history.push(`/product/${product.id}`)
+  }
 
   return (
     <section className="showcase-section component-section">
@@ -52,7 +51,7 @@ const ShowcaseSection = ({ headline, slug }: ShowcaseProps) => {
       <ul>
         {products.map((product: Product) => (
           <li key={product.id}>
-            <img src={`${process.env.PUBLIC_URL}/placeholder.png`} alt="" />
+            <img src={product.assets[0].url} alt={product.name} />
             <p>{product.name}</p>
             <p>{product.price.formatted_with_symbol}</p>
             <button
@@ -66,7 +65,7 @@ const ShowcaseSection = ({ headline, slug }: ShowcaseProps) => {
         ))}
       </ul>
     </section>
-  );
-};
+  )
+}
 
-export default ShowcaseSection;
+export default ShowcaseSection

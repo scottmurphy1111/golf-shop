@@ -1,8 +1,9 @@
-import { RouteComponentProps } from 'react-router';
-import CategoriesSection from '../Shared/CategoriesSection';
-import EmailCapture from './EmailCapture';
-import FeaturedBanner from './FeaturedBanner';
-import ShowcaseSection from './ShowcaseSection';
+import {RouteComponentProps} from 'react-router-dom'
+
+import CategoriesSection from '../Shared/CategoriesSection'
+import EmailCapture from './EmailCapture'
+import FeaturedBanner from './FeaturedBanner'
+import ShowcaseSection from './ShowcaseSection'
 
 const StoreFrontContainer = (props: RouteComponentProps) => {
   return (
@@ -16,7 +17,7 @@ const StoreFrontContainer = (props: RouteComponentProps) => {
         <EmailCapture />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default StoreFrontContainer;
+export default StoreFrontContainer

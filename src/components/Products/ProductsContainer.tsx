@@ -1,105 +1,104 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { Dimmer, Loader, Segment } from 'semantic-ui-react';
-import { PageParams } from '../../models/PageParams';
-import { Product } from '../../models/Product';
-import { useStore } from '../../store/store';
-import { extractParams } from '../../utils/extractParams';
-import { getProducts } from '../../utils/getProducts';
-import CategoriesSection from '../Shared/CategoriesSection';
-import ProductsFiltersContainer from './ProductsFiltersContainer';
-import ProductsHero from './ProductsHero';
-import ProductsList from './ProductsList';
+import {Product} from '@chec/commerce.js/types/product'
+import React, {useEffect, useMemo, useState} from 'react'
+import {RouteComponentProps} from 'react-router-dom'
+import {Dimmer, Loader, Segment} from 'semantic-ui-react'
+
+import {PageParams} from '../../models/PageParams'
+import {useStore} from '../../store/store'
+import {extractParams} from '../../utils/extractParams'
+import {getProducts} from '../../utils/getProducts'
+import CategoriesSection from '../Shared/CategoriesSection'
+import ProductsFiltersContainer from './ProductsFiltersContainer'
+import ProductsHero from './ProductsHero'
+import ProductsList from './ProductsList'
 
 const ProductsContainer = (props: RouteComponentProps) => {
-  const [loadingState, setLoadingState] = useState<boolean>(false);
-  const [productsExist, setProductsExist] = useState<boolean>(false);
-  const [params, setParams] = useState<PageParams>({});
-  const [isClubs, setIsClubs] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [slugs, setSlugs] = useState<(string | null | undefined)[]>([]);
-  const currentCat = useStore((state) => state.currentCat);
-  const setCurrentCat = useStore((state) => state.setCurrentCat);
-  const checkedFilterVals = useStore((state) => state.checkedFilterVals);
+  const [loadingState, setLoadingState] = useState<boolean>(false)
+  const [productsExist, setProductsExist] = useState<boolean>(false)
+  const [params, setParams] = useState<PageParams>({})
+  const [isClubs, setIsClubs] = useState(false)
+  const [products, setProducts] = useState<Product[]>([])
+  const [slugs, setSlugs] = useState<(string | null | undefined)[]>([])
+  const currentCat = useStore(state => state.currentCat)
+  const setCurrentCat = useStore(state => state.setCurrentCat)
+  const checkedFilterVals = useStore(state => state.checkedFilterVals)
 
-  const extractedParams = useMemo(() => extractParams(props), [props]);
+  const extractedParams = useMemo(() => extractParams(props), [props])
 
   useEffect(() => {
     if (extractedParams !== undefined) {
-      setParams(extractedParams);
+      setParams(extractedParams)
     }
 
     return () => {
-      setParams({});
-    };
-  }, [extractedParams]);
+      setParams({})
+    }
+  }, [extractedParams])
 
   useEffect(() => {
     if (params.category) {
-      setCurrentCat(params.category);
+      setCurrentCat(params.category)
     }
-  }, [params.category, setCurrentCat]);
+  }, [params.category, setCurrentCat])
 
   useEffect(() => {
-    setIsClubs(props.location.search.includes('clubs'));
+    setIsClubs(props.location.search.includes('clubs'))
 
     return () => {
-      setIsClubs(false);
-    };
-  }, [props.location.search]);
+      setIsClubs(false)
+    }
+  }, [props.location.search])
 
   useMemo(() => {
-    let slugsArray = [];
+    let slugsArray = []
     if (checkedFilterVals) {
-      slugsArray = [params.category, checkedFilterVals].flat();
-      setSlugs(slugsArray);
+      slugsArray = [params.category, checkedFilterVals].flat()
+      setSlugs(slugsArray)
     } else {
       if (params.category) {
-        setSlugs([params.category]);
+        setSlugs([params.category])
       }
     }
-  }, [params.category, checkedFilterVals]);
+  }, [params.category, checkedFilterVals])
 
   useEffect(() => {
-    let didCancel = false;
-    setLoadingState(true);
-    setProductsExist(false);
+    let didCancel = false
+    setLoadingState(true)
+    setProductsExist(false)
     const fetchProductsByCategory = async () => {
       if (params.category) {
         try {
           await getProducts({
             category_slug: slugs,
           })
-            .then((data: Product[]) => {
-              if (data) {
-                return data;
-              }
-              return Promise.reject();
+            .then(data => {
+              if (!data) return Promise.reject()
+              return data
             })
-            .then((data: Product[]) => {
+            .then((data: any[]) => {
               if (!didCancel) {
-                setProducts(data);
+                setProducts(data)
               }
-              setProductsExist(true);
+              setProductsExist(true)
             })
             .finally(() => {
-              setLoadingState(false);
-            });
+              setLoadingState(false)
+            })
         } catch (error) {
           console.log(
             'There was an error fetching products by categories',
             error
-          );
+          )
         }
       }
-    };
-    fetchProductsByCategory();
+    }
+    fetchProductsByCategory()
 
     return () => {
-      setProducts([]);
-      didCancel = true;
-    };
-  }, [params.category, slugs]);
+      setProducts([])
+      didCancel = true
+    }
+  }, [params.category, slugs])
 
   const renderProductsList = () => {
     return (
@@ -125,8 +124,8 @@ const ProductsContainer = (props: RouteComponentProps) => {
           {/* <Loader size="huge" inverted inline /> */}
         </Dimmer.Dimmable>
       </>
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -144,7 +143,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
         </div>
       </>
     </>
-  );
-};
+  )
+}
 
-export default ProductsContainer;
+export default ProductsContainer

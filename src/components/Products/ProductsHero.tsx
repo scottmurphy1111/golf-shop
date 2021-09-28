@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const ProductsHero = () => {
   return (
@@ -7,7 +7,7 @@ const ProductsHero = () => {
         <img src={`${process.env.PUBLIC_URL}/mc-bg.jpg`} alt="" />
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default ProductsHero;
+export default ProductsHero

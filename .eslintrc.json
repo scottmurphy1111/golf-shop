@@ -1,0 +1,15 @@
+{
+  "extends": "./node_modules/gts/",
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}

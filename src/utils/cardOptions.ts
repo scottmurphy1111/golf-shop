@@ -59,7 +59,7 @@ export const monthOptions = [
     text: '12',
     value: '12',
   },
-];
+]
 
 export const yearOptions = [
   {
@@ -132,4 +132,4 @@ export const yearOptions = [
     text: '33',
     value: '33',
   },
-];
+]

@@ -1,9 +1,14 @@
-import React from 'react';
+import {CheckoutToken} from '@chec/commerce.js/types/checkout-token'
+import React from 'react'
 
-const ShippingForm = () => {
+interface Props {
+  checkoutToken: CheckoutToken
+}
+
+const ShippingForm = ({checkoutToken}: Props) => {
   const handleSubmit = () => {
-    console.log('submission');
-  };
+    console.log('submission')
+  }
 
   return (
     <div>
@@ -13,7 +18,7 @@ const ShippingForm = () => {
         <button type="submit">Submit Delivery Address</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default ShippingForm;
+export default ShippingForm

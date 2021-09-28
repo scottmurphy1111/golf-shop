@@ -1,4 +1,4 @@
-import { Filter } from '../models/Filter';
+import {Filter} from '../models/Filter'
 
 export const storeFrontCats = [
   'apparel',
@@ -7,7 +7,7 @@ export const storeFrontCats = [
   'equipment',
   'clubs',
   'misc',
-];
+]
 
 export const filterCats: Filter[] = [
   {
@@ -206,4 +206,4 @@ export const filterCats: Filter[] = [
       },
     ],
   },
-];
+]

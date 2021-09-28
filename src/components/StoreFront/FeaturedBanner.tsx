@@ -1,5 +1,6 @@
-import React from 'react';
-import FeaturedBannerItem from './FeaturedBannerItem';
+import React from 'react'
+
+import FeaturedBannerItem from './FeaturedBannerItem'
 
 const FeaturedBanner = () => {
   return (
@@ -17,7 +18,7 @@ const FeaturedBanner = () => {
         bg={'mc-image3.jpg'}
       />
     </section>
-  );
-};
+  )
+}
 
-export default FeaturedBanner;
+export default FeaturedBanner

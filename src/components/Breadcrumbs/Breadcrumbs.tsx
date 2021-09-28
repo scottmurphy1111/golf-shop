@@ -1,33 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, {useEffect, useState} from 'react'
+import {Link, useLocation} from 'react-router-dom'
 // import useIsMountedRef from '../../hooks/useIsMountedRef';
 
-const Breadcrumbs = ({ productName }: any) => {
+interface Props {
+  productName: string
+}
+
+const Breadcrumbs = ({productName}: Props) => {
   //TODO fetch product from url path product id
-  const [breadcrumbs, setBreadcrumbs] = useState<String[] | null>(null);
+  const [breadcrumbs, setBreadcrumbs] = useState<String[] | null>(null)
   // const isMountedRef = useIsMountedRef();
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
     function handleBreadcrumbsUpdate() {
-      let createBreadcrumbs: String[];
-      const pathname = location.pathname;
+      let createBreadcrumbs: String[]
+      const pathname = location.pathname
       if (pathname && pathname.includes('products')) {
-        createBreadcrumbs = pathname.split('/').splice(1, 2);
-        setBreadcrumbs(() => ['Golf Shop', ...createBreadcrumbs]);
+        createBreadcrumbs = pathname.split('/').splice(1, 2)
+        setBreadcrumbs(() => ['Golf Shop', ...createBreadcrumbs])
       } else if (pathname && pathname.includes('prod_')) {
-        createBreadcrumbs = pathname.split('/').splice(1, 1);
-        createBreadcrumbs.push(productName);
-        setBreadcrumbs(() => ['Golf Shop', ...createBreadcrumbs]);
+        createBreadcrumbs = pathname.split('/').splice(1, 1)
+        createBreadcrumbs.push(productName)
+        setBreadcrumbs(() => ['Golf Shop', ...createBreadcrumbs])
       } else {
-        setBreadcrumbs(() => ['']);
+        setBreadcrumbs(() => [''])
       }
     }
 
     // if (isMountedRef.current) {
-    handleBreadcrumbsUpdate();
+    handleBreadcrumbsUpdate()
     // }
-  }, [location, productName]);
+  }, [location, productName])
 
   return (
     <div className="breadcrumbs-container">
@@ -46,7 +50,7 @@ const Breadcrumbs = ({ productName }: any) => {
           )}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Breadcrumbs;
+export default Breadcrumbs

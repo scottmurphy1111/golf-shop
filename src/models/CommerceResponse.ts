@@ -1,4 +1,4 @@
 export type CommerceResponse = {
-  meta: [];
-  data: [];
-};
+  meta: []
+  data: []
+}

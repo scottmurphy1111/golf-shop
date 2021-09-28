@@ -1,48 +1,49 @@
-import React, { useEffect } from 'react';
-import CartItem from './CartItem';
-import { useHistory } from 'react-router-dom';
-import { useCartStore } from '../../store/cartStore';
+import {OrderLineItem} from '@chec/commerce.js/types/order-line-item'
+import React, {useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
+import {Icon} from 'semantic-ui-react'
+
+import {useCartStore} from '../../store/cartStore'
+import CartItem from './CartItem'
 
 type Props = {
-  isOpen: boolean;
-  setIsOpen: (val: boolean) => void;
-};
+  isOpen: boolean
+  setIsOpen: (val: boolean) => void
+}
 
-const Cart = ({ isOpen, setIsOpen }: Props) => {
-  const cart = useCartStore((state) => state.cart);
-  const emptyCart = useCartStore((state) => state.emptyCart);
-  let history = useHistory();
+const Cart = ({isOpen, setIsOpen}: Props) => {
+  const cart = useCartStore(state => state.cart)
+  const emptyCart = useCartStore(state => state.emptyCart)
+  const history = useHistory()
 
-  const handleClickCart = (e: any) => {
-    const target = e.target;
+  const handleClickCart = (e: MouseEvent) => {
+    const target = e.target as HTMLElement
 
-    if (document.querySelector('.cart')!.contains(target)) {
-      setIsOpen(true);
+    if (document.querySelector('.cart-component')!.contains(target)) {
+      setIsOpen(true)
     } else {
-      setIsOpen(false);
+      setIsOpen(false)
     }
-  };
+  }
 
   useEffect(() => {
-    window.addEventListener('click', handleClickCart, true);
+    window.addEventListener('click', handleClickCart, true)
 
     return () => {
-      window.removeEventListener('click', handleClickCart, true);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      window.removeEventListener('click', handleClickCart, true)
+    }
+  }, [])
 
   const goToCheckout = () => {
-    localStorage.setItem('cart-id', cart.id);
-    history.push(`/checkout`);
-    setIsOpen(false);
+    localStorage.setItem('cart-id', cart.id)
+    history.push('/checkout')
+    setIsOpen(false)
     // setCheckout(true);
-  };
+  }
 
   const renderEmptyCart = () => {
     if (cart.total_items > 0) {
-      return;
+      return
     }
 
     return (
@@ -56,20 +57,23 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
           </button>
         </div>
       </>
-    );
-  };
+    )
+  }
 
   const renderCart = () => {
     if (cart.total_items === 0) {
-      return;
+      return
     }
 
     return (
       <>
-        <button className="close_btn" onClick={() => setIsOpen(!isOpen)}>
-          X
-        </button>
-        {cart.line_items.map((lineItem: any) => (
+        <Icon
+          link
+          className="close_btn"
+          name="close"
+          onClick={() => setIsOpen(!isOpen)}
+        />
+        {cart.line_items.map((lineItem: OrderLineItem) => (
           <CartItem item={lineItem} key={lineItem.id} />
         ))}
         <div className="cart__total">
@@ -87,20 +91,20 @@ const Cart = ({ isOpen, setIsOpen }: Props) => {
           </button>
         </div>
       </>
-    );
-  };
+    )
+  }
 
   const handleEmptyCart = () => {
-    emptyCart();
-  };
+    emptyCart()
+  }
 
   return (
-    <div className="cart" data-active={isOpen}>
+    <div className="cart-component" data-active={isOpen}>
       <h4 className="cart__heading">Your Shopping Cart</h4>
       {renderEmptyCart()}
       {renderCart()}
     </div>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

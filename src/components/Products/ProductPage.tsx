@@ -1,190 +1,189 @@
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
-import { Button, Icon } from 'semantic-ui-react';
-import { commerce } from '../../lib/commerce';
-import { Product } from '../../models/Product';
-import { useStore } from '../../store/store';
-import { CHEC_BASE_URL, HEADERS } from '../../utils/constants';
-import { stripHtml } from 'string-strip-html';
-import { useCartStore } from '../../store/cartStore';
-import { getSingleProductId } from '../../utils/getSingleProductId';
+import {Product} from '@chec/commerce.js/types/product'
+import axios from 'axios'
+import React, {useEffect, useRef, useState} from 'react'
+import {RouteComponentProps} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import {Button, Icon} from 'semantic-ui-react'
+import {stripHtml} from 'string-strip-html'
+
+import {commerce} from '../../lib/commerce'
+import {useCartStore} from '../../store/cartStore'
+import {useStore} from '../../store/store'
+import {CHEC_BASE_URL, HEADERS} from '../../utils/constants'
+import {getSingleProductId} from '../../utils/getSingleProductId'
 
 const ProductPage = (props: RouteComponentProps) => {
-  const [product, setProduct] = useState<Product>();
-  const singleProductId = useStore((state) => state.singleProductId);
-  const [fetchError, setFetchError] = useState(false);
-  const [colorVars, setColorVars] = useState<any>([]);
-  const [selectedColor, setSelectedColor] = useState<any>({});
-  const [sizeVars, setSizeVars] = useState<any>([]);
-  const [selectedSize, setSelectedSize] = useState<any>({});
-  const [quantity, setQuantity] = useState(1);
-  const [selectionsError, setSelectionsError] = useState<boolean>(false);
+  const [product, setProduct] = useState<Product>()
+  const singleProductId = useStore(state => state.singleProductId)
+  const [fetchError, setFetchError] = useState(false)
+  const [colorVars, setColorVars] = useState<any>([])
+  const [selectedColor, setSelectedColor] = useState<any>({})
+  const [sizeVars, setSizeVars] = useState<any>([])
+  const [selectedSize, setSelectedSize] = useState<any>({})
+  const [quantity, setQuantity] = useState(1)
+  const [selectionsError, setSelectionsError] = useState<boolean>(false)
+  const [productImages, setProductImages] = useState([])
+  const [selectedImage, setSelectedImage] = useState<any>(null)
 
-  const addToCart = useCartStore((state) => state.addToCart);
+  const addToCart = useCartStore(state => state.addToCart)
 
-  const imageVars = [
-    { source: 'mc-image.jpg', id: '111' },
-    { source: 'mc-image2.jpg', id: '112' },
-    { source: 'mc-image3.jpg', id: '113' },
-  ];
-  const [selectedImage, setSelectedImage] = useState<any>(imageVars[0]);
-
-  const imageThumbRef = useRef(null);
+  const imageThumbRef = useRef(null)
 
   //fetch single product
   useEffect(() => {
-    const productId = getSingleProductId(singleProductId, props);
+    const productId = getSingleProductId(singleProductId, props)
     if (productId) {
       commerce.products
         .retrieve(productId)
         .then((res: Product) => {
-          setProduct(res);
+          setProduct(res)
         })
 
         .catch((error: any) => {
-          console.error(`Cannot get product ${productId}`, error);
-        });
+          console.error(`Cannot get product ${productId}`, error)
+        })
 
       return () => {
-        localStorage.removeItem('product-id');
-      };
+        localStorage.removeItem('product-id')
+      }
     } else {
-      setFetchError(true);
+      setFetchError(true)
     }
 
     return () => {
-      setFetchError(false);
-    };
-  }, [props, singleProductId]);
+      setFetchError(false)
+    }
+  }, [props, singleProductId])
+
+  useEffect(() => {
+    if (!product) return null
+    setProductImages([...product.assets])
+    setSelectedImage(product.assets[0])
+  }, [product])
 
   //fetch all variants for product
   useEffect(() => {
-    const productId = getSingleProductId(singleProductId, props);
+    const productId = getSingleProductId(singleProductId, props)
 
-    const url: string = `${CHEC_BASE_URL}/products/${productId}/variants`;
+    const url = `${CHEC_BASE_URL}/products/${productId}/variants`
     axios
       .get(url, {
         headers: HEADERS,
       })
-      .then((res) => res.data)
-      .then((json) => console.log(json));
-  }, [props, singleProductId]);
+      .then(res => res.data)
+      .then(json => console.log(json))
+  }, [props, singleProductId])
 
   //fetch colors and sizes
   useEffect(() => {
-    const productId = getSingleProductId(singleProductId, props);
+    const productId = getSingleProductId(singleProductId, props)
 
-    const url: string = `${CHEC_BASE_URL}/products/${productId}/variant_groups`;
+    const url = `${CHEC_BASE_URL}/products/${productId}/variant_groups`
     axios
       .get(url, {
         headers: HEADERS,
       })
-      .then((res) => res.data)
-      .then((json) => {
-        const { data } = json;
+      .then(res => res.data)
+      .then(json => {
+        const {data} = json
         if (data) {
-          let colors;
-          let sizes;
-
-          colors = data.find((group: any) => {
+          const colors = data.find((group: any) => {
             if (group.name.toLowerCase().includes('color')) {
-              return group;
+              return group
             }
-            return null;
-          });
-          sizes = data.find((group: any) => {
+            return null
+          })
+          const sizes = data.find((group: any) => {
             if (group.name.toLowerCase().includes('size')) {
-              return group;
+              return group
             }
-            return null;
-          });
+            return null
+          })
 
-          setColorVars(colors);
-          setSizeVars(sizes);
+          setColorVars(colors)
+          setSizeVars(sizes)
         }
       })
-      .catch((err) =>
+      .catch(err =>
         console.log('There was an error getting product options', err)
-      );
-  }, [props, singleProductId]);
+      )
+  }, [props, singleProductId])
 
   const findVariantGroups = (product: any) => {
-    let groups: any[] = [];
+    let groups: any[] = []
     product.variant_groups.forEach((group: any) => {
-      groups = [...groups, group.id].sort();
-    });
+      groups = [...groups, group.id].sort()
+    })
 
-    return groups;
-  };
+    return groups
+  }
 
   const handleAddToCart = (
     id: any,
     quantity: number,
     variantData: any = {}
   ) => {
-    setSelectionsError(false);
-    let data = {};
-    const reqGroups = findVariantGroups(product);
+    setSelectionsError(false)
+    let data = {}
+    const reqGroups = findVariantGroups(product)
 
-    const colorData = variantData.selectedColor;
-    const sizeData = variantData.selectedSize;
+    const colorData = variantData.selectedColor
+    const sizeData = variantData.selectedSize
 
     if (Object.keys(colorData).length) {
-      const colorGroup = colorData.groupId;
-      const colorOption = colorData.color.id;
+      const colorGroup = colorData.groupId
+      const colorOption = colorData.color.id
       data = {
         ...data,
         [colorGroup]: colorOption,
-      };
+      }
     }
 
     if (Object.keys(sizeData).length) {
-      const sizeGroup = sizeData.groupId;
-      const sizeOption = sizeData.size.id;
+      const sizeGroup = sizeData.groupId
+      const sizeOption = sizeData.size.id
       data = {
         ...data,
         [sizeGroup]: sizeOption,
-      };
+      }
     }
 
     const selectionsValid =
-      reqGroups.join(',') === Object.keys(data).sort().join(',');
+      reqGroups.join(',') === Object.keys(data).sort().join(',')
 
     if (selectionsValid) {
-      addToCart(id, quantity, data);
+      addToCart(id, quantity, data)
     } else {
-      setSelectionsError(true);
+      setSelectionsError(true)
     }
-  };
+  }
 
   const handleQuantityClick = (quantity: any, type: any) => {
     if (type === 'decrease' && quantity > 1) {
-      setQuantity(quantity - 1);
+      setQuantity(quantity - 1)
     }
     if (type === 'increase') {
-      setQuantity(quantity + 1);
+      setQuantity(quantity + 1)
     }
-  };
+  }
 
   const handleColorClick = (groupId: any, color: any) => {
-    setSelectionsError(false);
-    setSelectedColor({ groupId, color });
-  };
+    setSelectionsError(false)
+    setSelectedColor({groupId, color})
+  }
 
   const handleSizeClick = (groupId: any, size: any) => {
-    setSelectionsError(false);
-    setSelectedSize({ groupId, size });
-  };
+    setSelectionsError(false)
+    setSelectedSize({groupId, size})
+  }
 
   const handleImageSelect = (key: any) => {
-    const imageSelection = imageVars.find((image) => {
-      return image.id === key;
-    });
+    const imageSelection = productImages.find(image => {
+      return image.id === key
+    })
 
-    setSelectedImage(imageSelection);
-  };
+    setSelectedImage(imageSelection)
+  }
 
   return (
     <div>
@@ -195,22 +194,20 @@ const ProductPage = (props: RouteComponentProps) => {
             <a href="/">start over</a>
           </span>
         )}
+
         {product && (
           <>
             <div className="product-page__wrapper">
               <div className="image-viewer">
                 <ul>
-                  {imageVars.map((image) => (
+                  {productImages.map(image => (
                     <li
                       key={image.id}
                       ref={imageThumbRef}
                       data-image={image.id}
                       onClick={() => handleImageSelect(image.id)}
                     >
-                      <img
-                        src={`${process.env.PUBLIC_URL}/${image.source}`}
-                        alt={image.source}
-                      />
+                      <img src={image.url} alt={image.filename} />
                     </li>
                   ))}
                 </ul>
@@ -218,20 +215,24 @@ const ProductPage = (props: RouteComponentProps) => {
                   className="product-page__active-image"
                   data-active-image={selectedImage}
                 >
-                  <img
-                    src={`${process.env.PUBLIC_URL}/${selectedImage.source}`}
-                    alt={selectedImage.source}
-                  />
+                  {selectedImage && (
+                    <img src={selectedImage.url} alt={selectedImage.filename} />
+                  )}
                 </div>
               </div>
               <div className="product-page__details">
+                {product.inventory.available > 0 ? (
+                  <p>item in Stock</p>
+                ) : (
+                  <p>out of stock!</p>
+                )}
                 <h2>{product.name}</h2>
                 <h3 className="price">{product.price.formatted_with_symbol}</h3>
                 <br />
                 <div className="product-page__make-selections">
                   <h3>Make Your Selections:</h3>
                   {selectionsError && (
-                    <span style={{ color: 'tomato' }}>
+                    <span style={{color: 'tomato'}}>
                       All product selections must be picked, please choose below
                     </span>
                   )}
@@ -323,12 +324,12 @@ const ProductPage = (props: RouteComponentProps) => {
                 <p>{stripHtml(product.description).result}</p>
               </div>
             </div>
-            <Link to={`/products?category=apparel`}>back to products</Link>
+            <Link to={'/products?category=apparel'}>back to products</Link>
           </>
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductPage;
+export default ProductPage

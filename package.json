@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chec/commerce.js": "^2.5.3",
+    "@chec/commerce.js": "^2.8.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.14",
     "axios": "^0.21.1",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",
@@ -22,7 +22,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "string-strip-html": "^8.2.13",
-    "typescript": "^4.1.2",
+    "styled-components": "^5.3.1",
     "web-vitals": "^1.0.1",
     "zustand": "^3.5.1"
   },
@@ -31,7 +31,14 @@
     "styles": "node-sass -w src/styles/scss -o src/styles/css",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "yarn run compile",
+    "pretest": "yarn run compile",
+    "posttest": "yarn run lint"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +57,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/chec__commerce.js": "^2.7.4",
+    "@types/node": "^14.11.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "gts": "^3.1.0",
+    "typescript": "^4.0.3"
   }
 }
