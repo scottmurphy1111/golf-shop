@@ -1,8 +1,7 @@
 import {Product} from '@chec/commerce.js/types/product'
 import axios from 'axios'
 import React, {useEffect, useRef, useState} from 'react'
-import {RouteComponentProps} from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import {Link, RouteComponentProps} from 'react-router-dom'
 import {Button, Icon} from 'semantic-ui-react'
 import {stripHtml} from 'string-strip-html'
 

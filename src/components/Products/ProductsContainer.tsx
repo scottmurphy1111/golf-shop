@@ -1,7 +1,8 @@
+/* eslint-disable node/no-unsupported-features/node-builtins */
 import {Product} from '@chec/commerce.js/types/product'
 import React, {useEffect, useMemo, useState} from 'react'
-import {RouteComponentProps} from 'react-router-dom'
-import {Dimmer, Loader, Segment} from 'semantic-ui-react'
+import {RouteComponentProps, useHistory} from 'react-router-dom'
+import {Container, Grid} from 'semantic-ui-react'
 
 import {PageParams} from '../../models/PageParams'
 import {useStore} from '../../store/store'
@@ -12,10 +13,11 @@ import ProductsFiltersContainer from './ProductsFiltersContainer'
 import ProductsHero from './ProductsHero'
 import ProductsList from './ProductsList'
 
+const {Row, Column} = Grid
 const ProductsContainer = (props: RouteComponentProps) => {
   const [loadingState, setLoadingState] = useState<boolean>(false)
   const [productsExist, setProductsExist] = useState<boolean>(false)
-  const [params, setParams] = useState<PageParams>({})
+  const [params, setParams] = useState<any>({})
   const [isClubs, setIsClubs] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [slugs, setSlugs] = useState<(string | null | undefined)[]>([])
@@ -25,15 +27,23 @@ const ProductsContainer = (props: RouteComponentProps) => {
 
   const extractedParams = useMemo(() => extractParams(props), [props])
 
+  const history = useHistory()
+
   useEffect(() => {
-    if (extractedParams !== undefined) {
+    if (extractedParams === null) {
+      const currentUrlParams = new URLSearchParams(window.location.search)
+      currentUrlParams.set('category', 'apparel')
+      history.push(`${window.location.pathname}?${currentUrlParams.toString()}`)
+      setCurrentCat('apparel')
+      setParams(currentUrlParams)
+    } else {
       setParams(extractedParams)
     }
 
     return () => {
       setParams({})
     }
-  }, [extractedParams])
+  }, [extractedParams, window.location.search])
 
   useEffect(() => {
     if (params.category) {
@@ -79,10 +89,12 @@ const ProductsContainer = (props: RouteComponentProps) => {
               if (!didCancel) {
                 setProducts(data)
               }
-              setProductsExist(true)
-            })
-            .finally(() => {
+              if (!data) {
+                setProductsExist(false)
+                return
+              }
               setLoadingState(false)
+              setProductsExist(true)
             })
         } catch (error) {
           console.log(
@@ -103,26 +115,18 @@ const ProductsContainer = (props: RouteComponentProps) => {
   const renderProductsList = () => {
     return (
       <>
-        <Dimmer.Dimmable as={Segment} dimmed={loadingState}>
-          <Dimmer active={loadingState} inverted>
-            <Loader size="huge">Loading...</Loader>
-          </Dimmer>
-          <div className="products-list-wrapper">
-            {isClubs ? (
-              <p>
-                Call the Golf Shop at 888-555-1122 for Club Fittings and
-                Availability
-              </p>
-            ) : (
-              <ProductsList
-                products={products}
-                loadingState={loadingState}
-                productsExist={productsExist}
-              />
-            )}
-          </div>
-          {/* <Loader size="huge" inverted inline /> */}
-        </Dimmer.Dimmable>
+        {isClubs ? (
+          <p>
+            Call the Golf Shop at 888-555-1122 for Club Fittings and
+            Availability
+          </p>
+        ) : (
+          <ProductsList
+            products={products}
+            loadingState={loadingState}
+            productsExist={productsExist}
+          />
+        )}
       </>
     )
   }
@@ -130,8 +134,19 @@ const ProductsContainer = (props: RouteComponentProps) => {
   return (
     <>
       <ProductsHero />
+      <Container>
+        <Grid>
+          <Row>
+            <Column width={3}>
+              <CategoriesSection type="cat-page" />
+              <ProductsFiltersContainer category={currentCat} />
+            </Column>
+            <Column width={13}>{renderProductsList()}</Column>
+          </Row>
+        </Grid>
+      </Container>
 
-      <>
+      {/* <>
         <div className="main-container container">
           <section className="products-container">
             <div className="products-filters-container">
@@ -141,7 +156,7 @@ const ProductsContainer = (props: RouteComponentProps) => {
             {renderProductsList()}
           </section>
         </div>
-      </>
+      </> */}
     </>
   )
 }

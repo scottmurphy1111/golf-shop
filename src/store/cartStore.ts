@@ -1,10 +1,11 @@
+import {Cart} from '@chec/commerce.js/types/cart'
 import create from 'zustand'
 
 import {commerce} from '../lib/commerce'
 
 type CartStoreState = {
-  cart: any //TODO change to Cart Model
-  setCart: (cart: any) => void
+  cart: Cart //TODO change to Cart Model
+  setCart: (cart: Cart) => void
   addToCart: (productId: any, quantity: any, variantData: any) => void
   updateCartQty: (lineItemId: any, quantity: any) => void
   removeFromCart: (lineItemId: any) => void
@@ -12,11 +13,11 @@ type CartStoreState = {
 }
 
 export const useCartStore = create<CartStoreState>(set => ({
-  cart: {},
+  cart: <Cart>{},
   setCart: cart => {
     set(() => ({cart: cart}))
   },
-  addToCart: async (productId: any, quantity: any, variantData: any) => {
+  addToCart: async (productId: string, quantity: number, variantData: any) => {
     try {
       const {cart} = await commerce.cart.add(productId, quantity, variantData)
       set(() => ({cart: cart}))
@@ -24,7 +25,7 @@ export const useCartStore = create<CartStoreState>(set => ({
       console.error('There was an error adding the item to the cart', error)
     }
   },
-  updateCartQty: async (lineItemId: any, quantity: any) => {
+  updateCartQty: async (lineItemId: string, quantity: number) => {
     try {
       const {cart} = await commerce.cart.update(lineItemId, {quantity})
       set(() => ({cart: cart}))

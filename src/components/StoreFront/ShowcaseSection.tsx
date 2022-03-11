@@ -1,10 +1,21 @@
 import {Product} from '@chec/commerce.js/types/product'
 import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
+import {
+  Button,
+  Card,
+  Grid,
+  Header,
+  Placeholder,
+  Segment,
+} from 'semantic-ui-react'
 
 import {commerce} from '../../lib/commerce'
 // import {Product} from '../../models/Product'
 import {useStore} from '../../store/store'
+import ProductItem from '../Products/ProductItem'
+
+const {Column, Row} = Grid
 
 type ShowcaseProps = {
   headline: string
@@ -12,13 +23,14 @@ type ShowcaseProps = {
 }
 
 const ShowcaseSection = ({headline, slug}: ShowcaseProps) => {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Product[] | any[]>([])
   const setSingleProductId = useStore(state => state.setSingleProductId)
 
   const history = useHistory()
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
+      setProducts([{}, {}, {}])
       try {
         const {data} = await commerce.products.list({
           category_slug: [slug],
@@ -47,23 +59,17 @@ const ShowcaseSection = ({headline, slug}: ShowcaseProps) => {
 
   return (
     <section className="showcase-section component-section">
-      <h2>{headline}</h2>
-      <ul>
-        {products.map((product: Product) => (
-          <li key={product.id}>
-            <img src={product.assets[0].url} alt={product.name} />
-            <p>{product.name}</p>
-            <p>{product.price.formatted_with_symbol}</p>
-            <button
-              name="product details"
-              className="product__btn primary"
-              onClick={() => handleClick(product)}
-            >
-              Product Details
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Header size="large">{headline}</Header>
+
+      <Grid columns={3} stackable>
+        <Row>
+          {products.map((product: Product, i) => (
+            <Column key={i} style={{marginBottom: '2.4rem'}}>
+              <ProductItem product={product} />
+            </Column>
+          ))}
+        </Row>
+      </Grid>
     </section>
   )
 }

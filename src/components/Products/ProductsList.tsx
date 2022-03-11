@@ -1,6 +1,6 @@
 import {Product} from '@chec/commerce.js/types/product'
 import React from 'react'
-import {Grid} from 'semantic-ui-react'
+import {Grid, Loader} from 'semantic-ui-react'
 
 import ProductItem from './ProductItem'
 
@@ -15,7 +15,8 @@ const ProductsList = ({products, loadingState, productsExist}: Props) => {
   return (
     <Grid columns={3} stackable container>
       <Row>
-        {!loadingState && productsExist && products.length === 0 && (
+        {loadingState && <Loader active inline="centered" />}
+        {!loadingState && !productsExist && (
           <span>Sorry, No products match these selections</span>
         )}
         {!loadingState &&

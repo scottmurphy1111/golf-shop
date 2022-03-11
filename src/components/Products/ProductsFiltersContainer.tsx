@@ -74,7 +74,7 @@ const ProductsFiltersContainer = ({category}: Props) => {
   }, [checkedFilterVals, history, location.search])
 
   return (
-    <div className="">
+    <div className="cat-page">
       <h3>Filter By:</h3>
       <ul>
         {localFilters &&

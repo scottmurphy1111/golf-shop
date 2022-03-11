@@ -38,6 +38,7 @@ const ProductSearch = () => {
             alignItems: 'center',
           }}
         >
+          test
           <Search size="small" onSearchChange={handleSearchChange} />
           <Icon
             link

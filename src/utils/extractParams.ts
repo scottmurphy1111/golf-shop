@@ -15,5 +15,6 @@ export const extractParams = (props: RouteComponentProps) => {
   )
 
   if (!returnedObj) return null
+  console.log(`returnedObj =  ${JSON.stringify(returnedObj, null, 2)}`)
   return returnedObj
 }

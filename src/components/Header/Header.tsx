@@ -14,8 +14,8 @@ import {
 import {commerce} from '../../lib/commerce'
 import {useCartStore} from '../../store/cartStore'
 import Cart from '../Cart/Cart'
-import ProductSearch from '../ProductSearch/ProductSearch'
 import {AppHeader} from './Header.style'
+import ProductSearch from './ProductSearch/ProductSearch'
 
 const {Row, Column} = Grid
 

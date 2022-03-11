@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Container} from 'semantic-ui-react'
+import {Header, Loader} from 'semantic-ui-react'
 
 import useSetCats from '../../hooks/useSetCats'
 import {Category} from '../../models/Category'
@@ -27,15 +27,17 @@ const CategoriesSection = ({headline, type}: Props) => {
     setLocalCats(cats)
   }, [cats])
   return (
-    <Container className={`categories-container component-section ${type}`}>
-      {headline && <h2>{headline}</h2>}
-      <ul>
-        {localCats.map((category: Category) => (
-          <CategoryItem key={category.id} category={category} />
-        ))}
-        <div>test</div>
-      </ul>
-    </Container>
+    <div className={`categories-container component-section ${type}`}>
+      {headline && <Header size="large">{headline}</Header>}
+      {localCats.length === 0 && <Loader active inline="centered" />}
+      {localCats && (
+        <ul>
+          {localCats.map((category: Category) => (
+            <CategoryItem key={category.id} category={category} />
+          ))}
+        </ul>
+      )}
+    </div>
   )
 }
 

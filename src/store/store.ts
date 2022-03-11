@@ -2,6 +2,7 @@ import create from 'zustand'
 
 import {Category} from '../models/Category'
 import {Filter} from '../models/Filter'
+import {filterCats} from '../utils/cats'
 import {getPaginatedCats} from '../utils/getPaginatedCats'
 
 type StoreState = {
@@ -26,216 +27,18 @@ const removeFilter = (currentVals: string[], val: string) => {
 export const useStore = create<StoreState>(set => ({
   allCats: [],
   setAllCats: async () => {
-    getPaginatedCats()
-      .then(categories => {
-        set({allCats: categories})
-      })
-      .catch(error => {
-        console.log('There was an error concatenating all categories', error)
-      })
+    try {
+      const result = await getPaginatedCats()
+      set({allCats: result})
+    } catch (error) {
+      console.log('There was an error concatenating all categories', error)
+    }
   },
   currentCat: '',
   setCurrentCat: cat => {
     set(() => ({currentCat: cat}))
   },
-  filterCats: [
-    {
-      category: 'apparel',
-      filters: [
-        {
-          name: 'tops',
-          checked: false,
-        },
-        {
-          name: 'bottoms',
-          checked: false,
-        },
-        {
-          name: 'outerwear',
-          checked: false,
-        },
-        {
-          name: 'headwear',
-          checked: false,
-        },
-        {
-          name: 'mens',
-          checked: false,
-        },
-        {
-          name: 'womens',
-          checked: false,
-        },
-        {
-          name: 'juniors',
-          checked: false,
-        },
-      ],
-      status: [
-        {
-          name: 'new',
-          checked: false,
-        },
-        {
-          name: 'bestseller',
-          checked: false,
-        },
-        {
-          name: 'online-exclusive',
-          checked: false,
-        },
-        {
-          name: 'sale',
-          checked: false,
-        },
-      ],
-    },
-    {
-      category: 'shoes',
-      filters: [
-        {
-          name: 'mens',
-          checked: false,
-        },
-        {
-          name: 'womens',
-          checked: false,
-        },
-        {
-          name: 'juniors',
-          checked: false,
-        },
-      ],
-      status: [
-        {
-          name: 'new',
-          checked: false,
-        },
-        {
-          name: 'bestseller',
-          checked: false,
-        },
-        {
-          name: 'online-exclusive',
-          checked: false,
-        },
-        {
-          name: 'sale',
-          checked: false,
-        },
-      ],
-    },
-    {
-      category: 'accessories',
-      filters: [
-        {
-          name: 'headcovers',
-          checked: false,
-        },
-        {
-          name: 'towels',
-          checked: false,
-        },
-        {
-          name: 'headwear',
-          checked: false,
-        },
-        {
-          name: 'misc',
-          checked: false,
-        },
-      ],
-      status: [
-        {
-          name: 'new',
-          checked: false,
-        },
-        {
-          name: 'bestseller',
-          checked: false,
-        },
-        {
-          name: 'online-exclusive',
-          checked: false,
-        },
-        {
-          name: 'sale',
-          checked: false,
-        },
-      ],
-    },
-    {
-      category: 'equipment',
-      filters: [
-        {
-          name: 'balls',
-          checked: false,
-        },
-        {
-          name: 'gloves',
-          checked: false,
-        },
-        {
-          name: 'misc',
-          checked: false,
-        },
-      ],
-      status: [
-        {
-          name: 'new',
-          checked: false,
-        },
-        {
-          name: 'bestseller',
-          checked: false,
-        },
-        {
-          name: 'online-exclusive',
-          checked: false,
-        },
-        {
-          name: 'sale',
-          checked: false,
-        },
-      ],
-    },
-    {
-      category: 'clubs',
-      filters: [],
-      status: [],
-    },
-    {
-      category: 'misc',
-      filters: [
-        {
-          name: 'memerobilia',
-          checked: false,
-        },
-        {
-          name: 'umbrellas',
-          checked: false,
-        },
-      ],
-      status: [
-        {
-          name: 'new',
-          checked: false,
-        },
-        {
-          name: 'bestseller',
-          checked: false,
-        },
-        {
-          name: 'online-exclusive',
-          checked: false,
-        },
-        {
-          name: 'sale',
-          checked: false,
-        },
-      ],
-    },
-  ],
+  filterCats: filterCats,
   resetFilterCats: false,
   setResetFilterCats: reset => {
     set(() => ({resetFilterCats: reset}))

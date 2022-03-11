@@ -17,11 +17,11 @@ const useSetCats = (
       return acc
     }, [])
 
-    getCats.forEach(category => {
-      return activeCat === category.slug
+    getCats.forEach(category =>
+      activeCat === category.slug
         ? (category.active = true)
         : (category.active = false)
-    })
+    )
 
     setCategories(getCats)
   }, [activeCat, allCats, catNames])
